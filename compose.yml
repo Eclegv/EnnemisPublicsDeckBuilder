@@ -1,0 +1,35 @@
+services:
+  neo4j:
+    image: neo4j:5.26.28-community
+    volumes:
+      - ./neo4j/neo4j_logs:/logs
+      - ./neo4j/neo4j_config:/config
+      - ./neo4j/neo4j_data:/data
+      - ./neo4j/neo4j_plugins:/plugins
+    environment:
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4J_AUTH=${Database__Auth}/${Database__Password}
+      - NEO4J_PLUGINS=["apoc"]
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    healthcheck:
+      test: [ "CMD", "/var/lib/neo4j/bin/cypher-shell", "-u", "${Database__Auth}", "-p", "${Database__Password}", "RETURN 0;" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 0s
+  lab:
+    image: memgraph/lab:3.12.0
+    container_name: memgraph-lab
+    ports:
+      - "3002:3000"
+    depends_on:
+      - neo4j
+    environment:
+      - QUICK_CONNECT_MG_HOST=memgraph
+      - QUICK_CONNECT_MG_PORT=7687

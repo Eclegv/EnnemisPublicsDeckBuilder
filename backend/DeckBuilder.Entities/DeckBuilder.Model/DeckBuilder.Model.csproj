@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>11.0</LangVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blueprint41" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="currentModelHash" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Blueprint41.Build" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="cards data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="cards data\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\models\models.csproj" />
+  </ItemGroup>
+</Project>

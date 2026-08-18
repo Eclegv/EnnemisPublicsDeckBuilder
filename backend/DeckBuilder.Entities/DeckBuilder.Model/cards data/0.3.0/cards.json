@@ -1,0 +1,234 @@
+[
+  {
+    "name": "UN RÊVE D'ENFANT",
+    "id": "b4e49c5a-391f-4802-9bad-5fc37a0c2365",
+    "effect": {
+      "base": "Durable. Tous vos personnages en jeu possèdent 1 [Notoriety] supplémentaire.",
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": null,
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null
+    },
+    "lore": "Un petit pas pour son père, un grand pas pour l'humanité",
+    "type": "Action",
+    "costs_values": [],
+    "provided_values": []
+  },
+  {
+    "name": "LOUIS",
+    "id": "5084a02f-b2f0-44cd-a875-2e683b050bde",
+    "effect": {
+      "base": "contact@ennemispublics.fr ennemispublics.fr",
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": null,
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null
+    },
+    "lore": "\"Ce fut un bel échange.\"",
+    "type": "SbireUnique",
+    "costs_values": [],
+    "provided_values": [
+      "Violence",
+      "Idea",
+      "Obscurantism"
+    ]
+  },
+  {
+    "name": "ROBIN",
+    "id": "47631460-99ae-49bd-ba5c-bfb26ca8fc85",
+    "effect": {
+      "base": "contact@ennemispublics.fr ennemispublics.fr",
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": null,
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null
+    },
+    "lore": "\"C'est à vous de jouer.\"",
+    "type": "SbireUnique",
+    "costs_values": [],
+    "provided_values": [
+      "Notoriety",
+      "Idea",
+      "Solidity"
+    ]
+  },
+  {
+    "name": "CHUBBY KIRIN",
+    "id": "7843c01e-a9bf-4aa6-886c-12aeb58048c3",
+    "effect": {
+      "base": "zema.coralie@gmail.com chubby-kirin.com",
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": null,
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null
+    },
+    "lore": "\"Oh boy...\"",
+    "type": "SbireUnique",
+    "costs_values": [
+      "Obscurantism",
+      "Idea",
+      "Solidity"
+    ],
+    "provided_values": []
+  },
+  {
+    "name": "SOMBRE BABS",
+    "id": "1cb1ebe7-1e27-4e0d-ae21-07861672f6c9",
+    "effect": {
+      "base": "À son tour votre adversaire peut glisser 1 de ses Alliés sous Babs.",
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": "Détruisez l'un de vos Sbires pour voler 1 Prosperia adverse.",
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": "Avoir 3 Alliés sous Babs."
+    },
+    "lore": "",
+    "type": "Boss",
+    "costs_values": [],
+    "provided_values": []
+  },
+  {
+    "name": "ROYAL DRAC",
+    "id": "3bec1679-4e7e-443c-b1b8-d867f7198a78",
+    "effect": {
+      "base": null,
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": "Faites une seconde fois l'une de vos activations.",
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": "L'adversaire atteint 9 Prosperias."
+    },
+    "lore": "",
+    "type": "Boss",
+    "costs_values": [],
+    "provided_values": []
+  },
+  {
+    "name": "Groney",
+    "id": "8bda5a1f-b7b2-4fc3-9b27-cc3a0c879f29",
+    "effect": {
+      "base": "Indestructible.",
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": "Gagnez 1 Prosperia.",
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null,
+      "eclipse": "RODNEY"
+    },
+    "lore": "\"Royal est l'homme qui brille de par sa simplicité.\"",
+    "type": "Eclipse",
+    "costs_values": [
+      "Notoriety",
+      "Idea",
+      "Solidity"
+    ],
+    "provided_values": []
+  },
+  {
+    "name": "Gumbill 4",
+    "id": "88cb854e-72c3-4a24-9546-457dbf1e73c9",
+    "effect": {
+      "base": null,
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": null,
+      "activation obligatoire": "Rattachez un Sbire libre sous un Allié de son propriétaire.",
+      "permanent": null,
+      "defaite": null,
+      "eclipse": "ANDROÏDE BILL 4"
+    },
+    "lore": "\"Dommage que je sois programmé pour distribuer des bonbons.\"",
+    "type": "Eclipse",
+    "costs_values": [
+      "Obscurantism",
+      "Solidity"
+    ],
+    "provided_values": []
+  },
+  {
+    "name": "Père Nosfé",
+    "id": "b198a5e9-09d1-4d76-a9f4-a260d1fa3cdf",
+    "effect": {
+      "base": null,
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": "Rattachez un Sbire libre sous Père Nosfé pour que l'adversaire vide 4 cartes.",
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null,
+      "eclipse": "NOSFERATUL"
+    },
+    "lore": "\"Père Nosfé, mets tes lunettes et lis-nous tout !\"",
+    "type": "Eclipse",
+    "costs_values": [
+      "Idea",
+      "Obscurantism"
+    ],
+    "provided_values": []
+  },
+  {
+    "name": "LIRINLIVRE",
+    "id": "b9712b13-2a6c-4441-ba80-5858aa2d5aa0",
+    "effect": {
+      "base": null,
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": "Recyclez une carte.",
+      "activation obligatoire": null,
+      "permanent": null,
+      "defaite": null
+    },
+    "lore": "\"Ennemispublics.fr ? Un jeu de cartes à collectionner français qui reprend des personnages du domaine public. Intéressant...\"",
+    "type": "Allie",
+    "costs_values": [
+      "Notoriety",
+      "Solidity"
+    ],
+    "provided_values": []
+  },
+  {
+    "name": "CLÉOSIRIS",
+    "id": "f2bc6275-eda0-43e3-a1d2-184536d27dbf",
+    "effect": {
+      "base": null,
+      "reaction": null,
+      "entre": null,
+      "sortie": null,
+      "activation": "Détruisez une carte de votre choix.",
+      "activation obligatoire": null,
+      "permanent": "Si vous avez un choix à faire dans un effet ; ne renoncer à rien, appliquez tout.",
+      "defaite": null
+    },
+    "lore": "\"Libérée de son tombeau, la légende resurgit.\"",
+    "type": "Allie",
+    "costs_values": [
+      "Notoriety",
+      "Violence",
+      "Idea",
+      "Obscurantism",
+      "Solidity"
+    ],
+    "provided_values": []
+  }
+]

@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>11.0</LangVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  
+  <ItemGroup>
+	  <Compile Include="Entities\**\*" />
+	  <Compile Include="Nodes\**\*" />
+	  <Compile Include="Relationships\**\*" />
+	  <Compile Include="PartialOverride\**\*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="currentModelHash" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\DeckBuilder.Model\DeckBuilder.Model.csproj" />
+  </ItemGroup>
+
+</Project>

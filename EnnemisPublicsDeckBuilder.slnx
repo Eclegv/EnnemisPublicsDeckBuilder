@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/webapi/webapi.csproj" />
+  </Folder>
+  <Folder Name="/backend/DeckBuilder.Entities/">
+    <Project Path="backend/DeckBuilder.Entities/DeckBuilder.Generated/DeckBuilder.Generated.csproj" />
+    <Project Path="backend/DeckBuilder.Entities/DeckBuilder.Model/DeckBuilder.Model.csproj" />
+  </Folder>
+  <Project Path="models/models.csproj" />
+</Solution>
