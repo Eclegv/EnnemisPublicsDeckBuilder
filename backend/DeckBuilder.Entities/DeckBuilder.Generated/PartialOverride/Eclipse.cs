@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using CardModel = models.Cards.Card;
 using EclipseModel = models.Cards.Eclipse;
 using TokenModel = models.Tokens.Token;
