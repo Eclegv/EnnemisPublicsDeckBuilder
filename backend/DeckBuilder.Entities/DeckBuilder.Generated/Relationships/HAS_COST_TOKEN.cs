@@ -72,7 +72,9 @@ public partial class HAS_COST_TOKEN_REL : RELATIONSHIP, IFromIn_HAS_COST_TOKEN_R
                 Parent = parent;
             }
 
+            public ValueNode Value { get { return new ValueNode(Parent, DirectionEnum.In); } }
             public AllieNode Allie { get { return new AllieNode(Parent, DirectionEnum.In); } }
+            public EclipseNode Eclipse { get { return new EclipseNode(Parent, DirectionEnum.In); } }
         }
 
         public HAS_COST_TOKEN_OUT Out { get { return new HAS_COST_TOKEN_OUT(this); } }

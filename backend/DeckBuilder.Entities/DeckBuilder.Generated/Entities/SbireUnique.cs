@@ -14,11 +14,11 @@ using node = DeckBuilder.Generated.Query.Node;
 
 namespace DeckBuilder.Generated.Manipulation
 {
-    public interface ISbireUniqueOriginalData : ICardOriginalData
+    public interface ISbireUniqueOriginalData : ICostOriginalData
     {
     }
 
-    public partial class SbireUnique : OGM<SbireUnique, SbireUnique.SbireUniqueData, System.String>, ICard, ISbireUniqueOriginalData
+    public partial class SbireUnique : OGM<SbireUnique, SbireUnique.SbireUniqueData, System.String>, ICost, ICard, ISbireUniqueOriginalData
     {
         #region Initialize
 
@@ -109,6 +109,7 @@ namespace DeckBuilder.Generated.Manipulation
 
             public SbireUniqueData(SbireUniqueData data)
             {
+                Tokens = data.Tokens;
                 Name = data.Name;
                 BaseEffect = data.BaseEffect;
                 ReactionEffect = data.ReactionEffect;
@@ -130,6 +131,7 @@ namespace DeckBuilder.Generated.Manipulation
             {
                 NodeType = "SbireUnique";
 
+                Tokens = new EntityCollection<Token>(Wrapper, Members.Tokens);
                 CardSet = new EntityCollection<CardSet>(Wrapper, Members.CardSet, item => { if (Members.CardSet.Events.HasRegisteredChangeHandlers) { int loadHack = item.Cards.Count; } });
             }
             public string NodeType { get; private set; }
@@ -189,6 +191,11 @@ namespace DeckBuilder.Generated.Manipulation
 
 
             #endregion
+            #region Members for interface ICost
+
+            public EntityCollection<Token> Tokens { get; private set; }
+
+            #endregion
             #region Members for interface ICard
 
             public string Name { get; set; }
@@ -213,6 +220,11 @@ namespace DeckBuilder.Generated.Manipulation
 
         #region Members for interface ISbireUnique
 
+
+        #endregion
+        #region Members for interface ICost
+
+        public EntityCollection<Token> Tokens { get { return InnerData.Tokens; } }
 
         #endregion
         #region Members for interface ICard
@@ -253,6 +265,65 @@ namespace DeckBuilder.Generated.Manipulation
         #endregion
 
         #region Relationship Properties
+
+        #region Tokens (Collection)
+
+        public List<HAS_VALUE_TOKEN> TokenRelations()
+        {
+            return HAS_VALUE_TOKEN.Load(_queryTokenRelations.Value, ("key", Id));
+        }
+        private readonly Lazy<ICompiled> _queryTokenRelations = new Lazy<ICompiled>(delegate()
+        {
+            return Transaction.CompiledQuery
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_VALUE_TOKEN.Alias(out var relAlias).In.Cost.Alias(out var inAlias))
+                .Where(inAlias.Id == key)
+                .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
+                .Compile();
+        });
+        public List<HAS_VALUE_TOKEN> TokensWhere(Func<HAS_VALUE_TOKEN.Alias, QueryCondition> expression)
+        {
+            var query = Transaction.CompiledQuery
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_VALUE_TOKEN.Alias(out var relAlias).In.Cost.Alias(out var inAlias))
+                .Where(inAlias.Id == Id)
+                .And(expression.Invoke(new HAS_VALUE_TOKEN.Alias(relAlias, inAlias, outAlias)))
+                .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
+                .Compile();
+
+            return HAS_VALUE_TOKEN.Load(query);
+        }
+        public List<HAS_VALUE_TOKEN> TokensWhere(Func<HAS_VALUE_TOKEN.Alias, QueryCondition[]> expression)
+        {
+            var query = Transaction.CompiledQuery
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_VALUE_TOKEN.Alias(out var relAlias).In.Cost.Alias(out var inAlias))
+                .Where(inAlias.Id == Id)
+                .And(expression.Invoke(new HAS_VALUE_TOKEN.Alias(relAlias, inAlias, outAlias)))
+                .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
+                .Compile();
+
+            return HAS_VALUE_TOKEN.Load(query);
+        }
+        public List<HAS_VALUE_TOKEN> TokensWhere(JsNotation<System.DateTime?> CreationDate = default)
+        {
+            return TokensWhere(delegate(HAS_VALUE_TOKEN.Alias alias)
+            {
+                List<QueryCondition> conditions = new List<QueryCondition>();
+
+                if (CreationDate.HasValue) conditions.Add(alias.CreationDate == CreationDate.Value);
+
+                return conditions.ToArray();
+            });
+        }
+        public void AddToken(Token token)
+        {
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            ((ILookupHelper<Token>)InnerData.Tokens).AddItem(token, null, properties);
+        }
+        public void RemoveToken(Token token)
+        {
+            Tokens.Remove(token);
+        }
+
+        #endregion
 
         #region CardSet (Lookup)
 
@@ -339,6 +410,11 @@ namespace DeckBuilder.Generated.Manipulation
 
             #region Members for interface ISbireUnique
 
+            #endregion
+
+            #region Members for interface ICost
+
+            public EntityProperty Tokens { get; } = DeckBuilder.Model.Datastore.Model.Entities["Cost"].Properties["Tokens"];
             #endregion
 
             #region Members for interface ICard
@@ -590,6 +666,49 @@ namespace DeckBuilder.Generated.Manipulation
 
             public static class OnPropertyChange
             {
+
+                #region OnTokens
+
+                private static bool onTokensIsRegistered = false;
+
+                private static EventHandler<SbireUnique, PropertyEventArgs> onTokens;
+                public static event EventHandler<SbireUnique, PropertyEventArgs> OnTokens
+                {
+                    add
+                    {
+                        lock (typeof(OnPropertyChange))
+                        {
+                            if (!onTokensIsRegistered)
+                            {
+                                Members.Tokens.Events.OnChange -= onTokensProxy;
+                                Members.Tokens.Events.OnChange += onTokensProxy;
+                                onTokensIsRegistered = true;
+                            }
+                            onTokens += value;
+                        }
+                    }
+                    remove
+                    {
+                        lock (typeof(OnPropertyChange))
+                        {
+                            onTokens -= value;
+                            if (onTokens is null && onTokensIsRegistered)
+                            {
+                                Members.Tokens.Events.OnChange -= onTokensProxy;
+                                onTokensIsRegistered = false;
+                            }
+                        }
+                    }
+                }
+            
+                private static void onTokensProxy(object sender, PropertyEventArgs args)
+                {
+                    EventHandler<SbireUnique, PropertyEventArgs> handler = onTokens;
+                    if (handler is not null)
+                        handler.Invoke((SbireUnique)sender, args);
+                }
+
+                #endregion
 
                 #region OnName
 
@@ -1238,6 +1357,13 @@ namespace DeckBuilder.Generated.Manipulation
 
         #region Members for interface ISbireUnique
 
+
+        #endregion
+        #region Members for interface ICost
+
+        ICostOriginalData ICost.OriginalVersion { get { return this; } }
+
+        IEnumerable<Token> ICostOriginalData.Tokens { get { return OriginalData.Tokens.OriginalData; } }
 
         #endregion
         #region Members for interface ICard

@@ -15,14 +15,7 @@ public class CardRepository
             CardSetEntity currentCardSet = CardSetEntity.Load(input.CardSetId.ToString());
             List<Card> cards = currentCardSet?.Cards?.Select(card => card.ToModelCard()).ToList();
 
-            foreach(ICardEntity card in currentCardSet.Cards)
-            {
-                cards.Add(card.ToModelCard());
-            }
-
             return cards;
-
-            Transaction.Commit();
         }
     }
 }

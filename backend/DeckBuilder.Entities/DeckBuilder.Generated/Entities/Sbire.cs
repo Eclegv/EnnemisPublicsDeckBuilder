@@ -14,12 +14,11 @@ using node = DeckBuilder.Generated.Query.Node;
 
 namespace DeckBuilder.Generated.Manipulation
 {
-    public interface ISbireOriginalData : ICardOriginalData
+    public interface ISbireOriginalData : ICostOriginalData
     {
-        IEnumerable<Token> Tokens { get; }
     }
 
-    public partial class Sbire : OGM<Sbire, Sbire.SbireData, System.String>, ICard, ISbireOriginalData
+    public partial class Sbire : OGM<Sbire, Sbire.SbireData, System.String>, ICost, ICard, ISbireOriginalData
     {
         #region Initialize
 
@@ -190,6 +189,10 @@ namespace DeckBuilder.Generated.Manipulation
 
             #region Members for interface ISbire
 
+
+            #endregion
+            #region Members for interface ICost
+
             public EntityCollection<Token> Tokens { get; private set; }
 
             #endregion
@@ -216,6 +219,10 @@ namespace DeckBuilder.Generated.Manipulation
         #region Outer Data
 
         #region Members for interface ISbire
+
+
+        #endregion
+        #region Members for interface ICost
 
         public EntityCollection<Token> Tokens { get { return InnerData.Tokens; } }
 
@@ -268,7 +275,7 @@ namespace DeckBuilder.Generated.Manipulation
         private readonly Lazy<ICompiled> _queryTokenRelations = new Lazy<ICompiled>(delegate()
         {
             return Transaction.CompiledQuery
-                .Match(node.Sbire.Alias(out var inAlias).In.HAS_VALUE_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_VALUE_TOKEN.Alias(out var relAlias).In.Cost.Alias(out var inAlias))
                 .Where(inAlias.Id == key)
                 .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
                 .Compile();
@@ -276,7 +283,7 @@ namespace DeckBuilder.Generated.Manipulation
         public List<HAS_VALUE_TOKEN> TokensWhere(Func<HAS_VALUE_TOKEN.Alias, QueryCondition> expression)
         {
             var query = Transaction.CompiledQuery
-                .Match(node.Sbire.Alias(out var inAlias).In.HAS_VALUE_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_VALUE_TOKEN.Alias(out var relAlias).In.Cost.Alias(out var inAlias))
                 .Where(inAlias.Id == Id)
                 .And(expression.Invoke(new HAS_VALUE_TOKEN.Alias(relAlias, inAlias, outAlias)))
                 .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
@@ -287,7 +294,7 @@ namespace DeckBuilder.Generated.Manipulation
         public List<HAS_VALUE_TOKEN> TokensWhere(Func<HAS_VALUE_TOKEN.Alias, QueryCondition[]> expression)
         {
             var query = Transaction.CompiledQuery
-                .Match(node.Sbire.Alias(out var inAlias).In.HAS_VALUE_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_VALUE_TOKEN.Alias(out var relAlias).In.Cost.Alias(out var inAlias))
                 .Where(inAlias.Id == Id)
                 .And(expression.Invoke(new HAS_VALUE_TOKEN.Alias(relAlias, inAlias, outAlias)))
                 .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
@@ -403,7 +410,11 @@ namespace DeckBuilder.Generated.Manipulation
 
             #region Members for interface ISbire
 
-            public EntityProperty Tokens { get; } = DeckBuilder.Model.Datastore.Model.Entities["Sbire"].Properties["Tokens"];
+            #endregion
+
+            #region Members for interface ICost
+
+            public EntityProperty Tokens { get; } = DeckBuilder.Model.Datastore.Model.Entities["Cost"].Properties["Tokens"];
             #endregion
 
             #region Members for interface ICard
@@ -1346,7 +1357,13 @@ namespace DeckBuilder.Generated.Manipulation
 
         #region Members for interface ISbire
 
-        IEnumerable<Token> ISbireOriginalData.Tokens { get { return OriginalData.Tokens.OriginalData; } }
+
+        #endregion
+        #region Members for interface ICost
+
+        ICostOriginalData ICost.OriginalVersion { get { return this; } }
+
+        IEnumerable<Token> ICostOriginalData.Tokens { get { return OriginalData.Tokens.OriginalData; } }
 
         #endregion
         #region Members for interface ICard

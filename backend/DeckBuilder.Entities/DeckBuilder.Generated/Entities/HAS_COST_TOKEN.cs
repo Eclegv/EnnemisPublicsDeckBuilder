@@ -15,15 +15,15 @@ using node = DeckBuilder.Generated.Query.Node;
 namespace DeckBuilder.Generated.Manipulation
 {
     /// <summary>
-    /// Relationship: (Allie)-[HAS_COST_TOKEN]->(Token)
+    /// Relationship: (Value)-[HAS_COST_TOKEN]->(Token)
     /// </summary>
     public partial class HAS_COST_TOKEN
     {
-        private HAS_COST_TOKEN(string elementId, Allie @in, Token @out, Dictionary<string, object> properties)
+        private HAS_COST_TOKEN(string elementId, IValue @in, Token @out, Dictionary<string, object> properties)
         {
             _elementId = elementId;
             
-            Allie = @in;
+            Value = @in;
             Token = @out;
             
             CreationDate = (System.DateTime?)PersistenceProvider.CurrentPersistenceProvider.ConvertFromStoredType(typeof(System.DateTime?), properties.GetValue("CreationDate"));
@@ -32,9 +32,9 @@ namespace DeckBuilder.Generated.Manipulation
         internal string _elementId { get; private set; }
 
         /// <summary>
-        /// Allie (In Node)
+        /// Value (In Node)
         /// </summary>
-        public Allie Allie { get; private set; }
+        public IValue Value { get; private set; }
 
         /// <summary>
         /// Token (Out Node)
@@ -46,8 +46,8 @@ namespace DeckBuilder.Generated.Manipulation
         public void Assign()
         {
             var query = Transaction.CompiledQuery
-                .Match(node.Allie.Alias(out var inAlias).In.HAS_COST_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
-                .Where(inAlias.Id == Allie.Id, outAlias.Id == Token.Id, relAlias.ElementId == _elementId)
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
+                .Where(inAlias.Id == Value.Id, outAlias.Id == Token.Id, relAlias.ElementId == _elementId)
                 .Set(GetAssignments(relAlias))
                 .Compile();
 
@@ -64,7 +64,7 @@ namespace DeckBuilder.Generated.Manipulation
         public static List<HAS_COST_TOKEN> Where(Func<Alias, QueryCondition> expression)
         {
             var query = Transaction.CompiledQuery
-                .Match(node.Allie.Alias(out var inAlias).In.HAS_COST_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
                 .Where(expression.Invoke(new Alias(relAlias, inAlias, outAlias)))
                 .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
                 .Compile();
@@ -74,7 +74,7 @@ namespace DeckBuilder.Generated.Manipulation
         public static List<HAS_COST_TOKEN> Where(Func<Alias, QueryCondition[]> expression)
         {
             var query = Transaction.CompiledQuery
-                .Match(node.Allie.Alias(out var inAlias).In.HAS_COST_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
 
                 .Where(expression.Invoke(new Alias(relAlias, inAlias, outAlias)))
                 .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
@@ -82,14 +82,14 @@ namespace DeckBuilder.Generated.Manipulation
 
             return Load(query);
         }
-        public static List<HAS_COST_TOKEN> Where(JsNotation<System.DateTime?> CreationDate = default, JsNotation<Allie> InNode = default, JsNotation<Token> OutNode = default)
+        public static List<HAS_COST_TOKEN> Where(JsNotation<System.DateTime?> CreationDate = default, JsNotation<IValue> InNode = default, JsNotation<Token> OutNode = default)
         {
             return Where(delegate(Alias alias)
             {
                 List<QueryCondition> conditions = new List<QueryCondition>();
 
                 if (CreationDate.HasValue) conditions.Add(alias.CreationDate == CreationDate.Value);
-                if (InNode.HasValue) conditions.Add(alias.Allie(InNode.Value));
+                if (InNode.HasValue) conditions.Add(alias.Value(InNode.Value));
                 if (OutNode.HasValue) conditions.Add(alias.Token(OutNode.Value));
 
                 return conditions.ToArray();
@@ -119,11 +119,11 @@ namespace DeckBuilder.Generated.Manipulation
         private static Relationship _relationship = null;
 
         /// <summary>
-        /// CRUD Specific alias for relationship: (Allie)-[HAS_COST_TOKEN]->(Token)
+        /// CRUD Specific alias for relationship: (Value)-[HAS_COST_TOKEN]->(Token)
         /// </summary>
         public partial class Alias
         {
-            internal Alias(q.HAS_COST_TOKEN_ALIAS relAlias, q.AllieAlias inAlias, q.TokenAlias outAlias)
+            internal Alias(q.HAS_COST_TOKEN_ALIAS relAlias, q.ValueAlias inAlias, q.TokenAlias outAlias)
             {
                 _relAlias = relAlias;
                 _inAlias = inAlias;
@@ -143,38 +143,38 @@ namespace DeckBuilder.Generated.Manipulation
             private DateTimeResult _creationDate = null;
 
             /// <summary>
-            /// Allie in-node: (Allie)-[HAS_COST_TOKEN]->(Token)
+            /// Value in-node: (Value)-[HAS_COST_TOKEN]->(Token)
             /// </summary>
             /// <returns>
-            /// Condition where in-node is the given allie
+            /// Condition where in-node is the given value
             /// </returns>
-            public QueryCondition Allie(Allie allie)
+            public QueryCondition Value(IValue value)
             {
-                return _inAlias.Id == allie.Id;
+                return _inAlias.Id == value.Id;
             }
             /// <summary>
-            /// Allie in-node: (Allie)-[HAS_COST_TOKEN]->(Token)
+            /// Value in-node: (Value)-[HAS_COST_TOKEN]->(Token)
             /// </summary>
             /// <returns>
-            /// Condition where in-node is in the given set of allies
+            /// Condition where in-node is in the given set of values
             /// </returns>
-            public QueryCondition Allies(IEnumerable<Allie> allies)
+            public QueryCondition Values(IEnumerable<IValue> values)
             {
-                return _inAlias.Id.In(allies.Select(item => item.Id));
+                return _inAlias.Id.In(values.Select(item => item.Id));
             }
             /// <summary>
-            /// Allie in-node: (Allie)-[HAS_COST_TOKEN]->(Token)
+            /// Value in-node: (Value)-[HAS_COST_TOKEN]->(Token)
             /// </summary>
             /// <returns>
-            /// Condition where in-node is in the given set of allies
+            /// Condition where in-node is in the given set of values
             /// </returns>
-            public QueryCondition Allies(params Allie[] allies)
+            public QueryCondition Values(params IValue[] values)
             {
-                return _inAlias.Id.In(allies.Select(item => item.Id));
+                return _inAlias.Id.In(values.Select(item => item.Id));
             }
 
             /// <summary>
-            /// Token out-node: (Allie)-[HAS_COST_TOKEN]->(Token)
+            /// Token out-node: (Value)-[HAS_COST_TOKEN]->(Token)
             /// </summary>
             /// <returns>
             /// Condition where out-node is the given token
@@ -184,7 +184,7 @@ namespace DeckBuilder.Generated.Manipulation
                 return _outAlias.Id == token.Id;
             }
             /// <summary>
-            /// Token out-node: (Allie)-[HAS_COST_TOKEN]->(Token)
+            /// Token out-node: (Value)-[HAS_COST_TOKEN]->(Token)
             /// </summary>
             /// <returns>
             /// Condition where out-node is in the given set of tokens
@@ -194,7 +194,7 @@ namespace DeckBuilder.Generated.Manipulation
                 return _outAlias.Id.In(tokens.Select(item => item.Id));
             }
             /// <summary>
-            /// Token out-node: (Allie)-[HAS_COST_TOKEN]->(Token)
+            /// Token out-node: (Value)-[HAS_COST_TOKEN]->(Token)
             /// </summary>
             /// <returns>
             /// Condition where out-node is in the given set of tokens
@@ -205,7 +205,7 @@ namespace DeckBuilder.Generated.Manipulation
             }
 
             private readonly q.HAS_COST_TOKEN_ALIAS _relAlias;
-            private readonly q.AllieAlias _inAlias;
+            private readonly q.ValueAlias _inAlias;
             private readonly q.TokenAlias _outAlias;
         }
     }
@@ -215,7 +215,7 @@ namespace DeckBuilder.Generated.Manipulation
         public static void Assign(this IEnumerable<HAS_COST_TOKEN> @this)
         {
             var query = Transaction.CompiledQuery
-                .Match(node.Allie.Alias(out var inAlias).In.HAS_COST_TOKEN.Alias(out var relAlias).Out.Token.Alias(out var outAlias))
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
                 .Where(relAlias.ElementId.In(@this.Select(item => item._elementId)))
                 .Set(GetAssignments(relAlias))
                 .Compile();

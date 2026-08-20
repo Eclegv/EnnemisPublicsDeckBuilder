@@ -72,7 +72,9 @@ public partial class HAS_VALUE_TOKEN_REL : RELATIONSHIP, IFromIn_HAS_VALUE_TOKEN
                 Parent = parent;
             }
 
+            public CostNode Cost { get { return new CostNode(Parent, DirectionEnum.In); } }
             public SbireNode Sbire { get { return new SbireNode(Parent, DirectionEnum.In); } }
+            public SbireUniqueNode SbireUnique { get { return new SbireUniqueNode(Parent, DirectionEnum.In); } }
         }
 
         public HAS_VALUE_TOKEN_OUT Out { get { return new HAS_VALUE_TOKEN_OUT(this); } }

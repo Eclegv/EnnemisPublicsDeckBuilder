@@ -1,6 +1,7 @@
 using System;
 using CardModel = models.Cards.Card;
 using AllieModel = models.Cards.Allie;
+using TokenModel = models.Tokens.Token;
 
 namespace DeckBuilder.Generated.Manipulation;
 
@@ -21,6 +22,7 @@ public partial class Allie
             PermanentEffect = this.PermanentEffect,
             LoosingEffect = this.LoosingEffect,
             Lore = this.Lore,
+            Costs = this.Tokens.ToList().ConvertAll<TokenModel>(tk => tk!)
         };
     }
 }

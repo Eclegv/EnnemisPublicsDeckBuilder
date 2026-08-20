@@ -13,8 +13,6 @@ public class Program
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        Console.WriteLine(builder.Environment.EnvironmentName);
-
         if (builder.Environment.EnvironmentName == "Development")
             Env.TraversePath().Load();
 

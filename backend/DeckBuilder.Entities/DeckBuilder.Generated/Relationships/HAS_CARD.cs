@@ -85,6 +85,10 @@ public partial class HAS_CARD_REL : RELATIONSHIP, IFromIn_HAS_CARD_REL, IFromOut
             }
 
             public CardNode Card { get { return new CardNode(Parent, DirectionEnum.Out); } }
+            [Obsolete("This relationship is virtual, consider making entity Value concrete or exit this relationship via Card.", true)]
+            public ValueNode Value { get { return new ValueNode(Parent, DirectionEnum.Out); } }
+            [Obsolete("This relationship is virtual, consider making entity Cost concrete or exit this relationship via Card.", true)]
+            public CostNode Cost { get { return new CostNode(Parent, DirectionEnum.Out); } }
             public BossNode Boss { get { return new BossNode(Parent, DirectionEnum.Out); } }
             public ActionNode Action { get { return new ActionNode(Parent, DirectionEnum.Out); } }
             public SbireNode Sbire { get { return new SbireNode(Parent, DirectionEnum.Out); } }

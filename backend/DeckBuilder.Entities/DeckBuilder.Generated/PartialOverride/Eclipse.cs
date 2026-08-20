@@ -1,6 +1,7 @@
 using System;
 using CardModel = models.Cards.Card;
 using EclipseModel = models.Cards.Eclipse;
+using TokenModel = models.Tokens.Token;
 
 namespace DeckBuilder.Generated.Manipulation;
 
@@ -21,6 +22,8 @@ public partial class Eclipse
             PermanentEffect = this.PermanentEffect,
             LoosingEffect = this.LoosingEffect,
             Lore = this.Lore,
+            EclipseEffect = this.EclipseEffect,
+            Costs = this.Tokens.ToList().ConvertAll<TokenModel>(tk => tk!)
         };
     }
 }

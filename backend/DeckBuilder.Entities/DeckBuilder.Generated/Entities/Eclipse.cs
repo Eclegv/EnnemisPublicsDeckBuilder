@@ -14,13 +14,13 @@ using node = DeckBuilder.Generated.Query.Node;
 
 namespace DeckBuilder.Generated.Manipulation
 {
-    public interface IEclipseOriginalData : ICardOriginalData
+    public interface IEclipseOriginalData : IValueOriginalData
     {
         string EclipseEffect { get; }
         IEnumerable<Allie> Ally { get; }
     }
 
-    public partial class Eclipse : OGM<Eclipse, Eclipse.EclipseData, System.String>, ICard, IEclipseOriginalData
+    public partial class Eclipse : OGM<Eclipse, Eclipse.EclipseData, System.String>, IValue, ICard, IEclipseOriginalData
     {
         #region Initialize
 
@@ -113,6 +113,7 @@ namespace DeckBuilder.Generated.Manipulation
             {
                 EclipseEffect = data.EclipseEffect;
                 Ally = data.Ally;
+                Tokens = data.Tokens;
                 Name = data.Name;
                 BaseEffect = data.BaseEffect;
                 ReactionEffect = data.ReactionEffect;
@@ -135,6 +136,7 @@ namespace DeckBuilder.Generated.Manipulation
                 NodeType = "Eclipse";
 
                 Ally = new EntityCollection<Allie>(Wrapper, Members.Ally);
+                Tokens = new EntityCollection<Token>(Wrapper, Members.Tokens);
                 CardSet = new EntityCollection<CardSet>(Wrapper, Members.CardSet, item => { if (Members.CardSet.Events.HasRegisteredChangeHandlers) { int loadHack = item.Cards.Count; } });
             }
             public string NodeType { get; private set; }
@@ -199,6 +201,11 @@ namespace DeckBuilder.Generated.Manipulation
             public EntityCollection<Allie> Ally { get; private set; }
 
             #endregion
+            #region Members for interface IValue
+
+            public EntityCollection<Token> Tokens { get; private set; }
+
+            #endregion
             #region Members for interface ICard
 
             public string Name { get; set; }
@@ -225,6 +232,11 @@ namespace DeckBuilder.Generated.Manipulation
 
         public string EclipseEffect { get { LazyGet(); return InnerData.EclipseEffect; } set { if (LazySet(Members.EclipseEffect, InnerData.EclipseEffect, value)) InnerData.EclipseEffect = value; } }
         public EntityCollection<Allie> Ally { get { return InnerData.Ally; } }
+
+        #endregion
+        #region Members for interface IValue
+
+        public EntityCollection<Token> Tokens { get { return InnerData.Tokens; } }
 
         #endregion
         #region Members for interface ICard
@@ -325,6 +337,65 @@ namespace DeckBuilder.Generated.Manipulation
 
         #endregion
 
+        #region Tokens (Collection)
+
+        public List<HAS_COST_TOKEN> TokenRelations()
+        {
+            return HAS_COST_TOKEN.Load(_queryTokenRelations.Value, ("key", Id));
+        }
+        private readonly Lazy<ICompiled> _queryTokenRelations = new Lazy<ICompiled>(delegate()
+        {
+            return Transaction.CompiledQuery
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
+                .Where(inAlias.Id == key)
+                .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
+                .Compile();
+        });
+        public List<HAS_COST_TOKEN> TokensWhere(Func<HAS_COST_TOKEN.Alias, QueryCondition> expression)
+        {
+            var query = Transaction.CompiledQuery
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
+                .Where(inAlias.Id == Id)
+                .And(expression.Invoke(new HAS_COST_TOKEN.Alias(relAlias, inAlias, outAlias)))
+                .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
+                .Compile();
+
+            return HAS_COST_TOKEN.Load(query);
+        }
+        public List<HAS_COST_TOKEN> TokensWhere(Func<HAS_COST_TOKEN.Alias, QueryCondition[]> expression)
+        {
+            var query = Transaction.CompiledQuery
+                .Match(node.Token.Alias(out var outAlias).Out.HAS_COST_TOKEN.Alias(out var relAlias).In.Value.Alias(out var inAlias))
+                .Where(inAlias.Id == Id)
+                .And(expression.Invoke(new HAS_COST_TOKEN.Alias(relAlias, inAlias, outAlias)))
+                .Return(relAlias.ElementId.As("elementId"), relAlias.Properties("properties"), inAlias.As("in"), outAlias.As("out"))
+                .Compile();
+
+            return HAS_COST_TOKEN.Load(query);
+        }
+        public List<HAS_COST_TOKEN> TokensWhere(JsNotation<System.DateTime?> CreationDate = default)
+        {
+            return TokensWhere(delegate(HAS_COST_TOKEN.Alias alias)
+            {
+                List<QueryCondition> conditions = new List<QueryCondition>();
+
+                if (CreationDate.HasValue) conditions.Add(alias.CreationDate == CreationDate.Value);
+
+                return conditions.ToArray();
+            });
+        }
+        public void AddToken(Token token)
+        {
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            ((ILookupHelper<Token>)InnerData.Tokens).AddItem(token, null, properties);
+        }
+        public void RemoveToken(Token token)
+        {
+            Tokens.Remove(token);
+        }
+
+        #endregion
+
         #region CardSet (Lookup)
 
         public HAS_CARD CardSetRelation()
@@ -412,6 +483,11 @@ namespace DeckBuilder.Generated.Manipulation
 
             public EntityProperty EclipseEffect { get; } = DeckBuilder.Model.Datastore.Model.Entities["Eclipse"].Properties["EclipseEffect"];
             public EntityProperty Ally { get; } = DeckBuilder.Model.Datastore.Model.Entities["Eclipse"].Properties["Ally"];
+            #endregion
+
+            #region Members for interface IValue
+
+            public EntityProperty Tokens { get; } = DeckBuilder.Model.Datastore.Model.Entities["Value"].Properties["Tokens"];
             #endregion
 
             #region Members for interface ICard
@@ -744,6 +820,49 @@ namespace DeckBuilder.Generated.Manipulation
                 private static void onAllyProxy(object sender, PropertyEventArgs args)
                 {
                     EventHandler<Eclipse, PropertyEventArgs> handler = onAlly;
+                    if (handler is not null)
+                        handler.Invoke((Eclipse)sender, args);
+                }
+
+                #endregion
+
+                #region OnTokens
+
+                private static bool onTokensIsRegistered = false;
+
+                private static EventHandler<Eclipse, PropertyEventArgs> onTokens;
+                public static event EventHandler<Eclipse, PropertyEventArgs> OnTokens
+                {
+                    add
+                    {
+                        lock (typeof(OnPropertyChange))
+                        {
+                            if (!onTokensIsRegistered)
+                            {
+                                Members.Tokens.Events.OnChange -= onTokensProxy;
+                                Members.Tokens.Events.OnChange += onTokensProxy;
+                                onTokensIsRegistered = true;
+                            }
+                            onTokens += value;
+                        }
+                    }
+                    remove
+                    {
+                        lock (typeof(OnPropertyChange))
+                        {
+                            onTokens -= value;
+                            if (onTokens is null && onTokensIsRegistered)
+                            {
+                                Members.Tokens.Events.OnChange -= onTokensProxy;
+                                onTokensIsRegistered = false;
+                            }
+                        }
+                    }
+                }
+            
+                private static void onTokensProxy(object sender, PropertyEventArgs args)
+                {
+                    EventHandler<Eclipse, PropertyEventArgs> handler = onTokens;
                     if (handler is not null)
                         handler.Invoke((Eclipse)sender, args);
                 }
@@ -1409,6 +1528,13 @@ namespace DeckBuilder.Generated.Manipulation
 
         string IEclipseOriginalData.EclipseEffect { get { return OriginalData.EclipseEffect; } }
         IEnumerable<Allie> IEclipseOriginalData.Ally { get { return OriginalData.Ally.OriginalData; } }
+
+        #endregion
+        #region Members for interface IValue
+
+        IValueOriginalData IValue.OriginalVersion { get { return this; } }
+
+        IEnumerable<Token> IValueOriginalData.Tokens { get { return OriginalData.Tokens.OriginalData; } }
 
         #endregion
         #region Members for interface ICard

@@ -1,6 +1,7 @@
 using System;
 using CardModel = models.Cards.Card;
 using SbireUniqueModel = models.Cards.SbireUnique;
+using TokenModel = models.Tokens.Token;
 
 namespace DeckBuilder.Generated.Manipulation;
 
@@ -21,6 +22,7 @@ public partial class SbireUnique
             PermanentEffect = this.PermanentEffect,
             LoosingEffect = this.LoosingEffect,
             Lore = this.Lore,
+            Values = this.Tokens.ToList().ConvertAll<TokenModel>(tk => tk!)
         };
     }
 }

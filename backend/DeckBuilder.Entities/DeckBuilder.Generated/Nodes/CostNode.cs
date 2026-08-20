@@ -15,55 +15,49 @@ namespace DeckBuilder.Generated.Query
 {
     public partial class Node
     {
-        public static EclipseNode Eclipse { get { return new EclipseNode(); } }
+        [Obsolete("This entity is virtual, consider making entity Cost concrete or use another entity as your starting point.", true)]
+        public static CostNode Cost { get { return new CostNode(); } }
     }
 
-    public partial class EclipseNode : Blueprint41.Query.Node
+    public partial class CostNode : Blueprint41.Query.Node
     {
-        public static implicit operator QueryCondition(EclipseNode a)
+        public static implicit operator QueryCondition(CostNode a)
         {
             return new QueryCondition(a);
         }
-        public static QueryCondition operator !(EclipseNode a)
+        public static QueryCondition operator !(CostNode a)
         {
             return new QueryCondition(a, true);
         } 
 
         protected override string GetNeo4jLabel()
         {
-            return "Eclipse";
+            return null;
         }
 
         protected override Entity GetEntity()
         {
-            return m.Eclipse.Entity;
-        }
-        public FunctionalId FunctionalId
-        {
-            get
-            {
-                return m.Eclipse.Entity.FunctionalId;
-            }
+            return null;
         }
 
-        internal EclipseNode() { }
-        internal EclipseNode(EclipseAlias alias, bool isReference = false)
+        internal CostNode() { }
+        internal CostNode(CostAlias alias, bool isReference = false)
         {
             NodeAlias = alias;
             IsReference = isReference;
         }
-        internal EclipseNode(RELATIONSHIP relationship, DirectionEnum direction, string neo4jLabel = null, Entity entity = null) : base(relationship, direction, neo4jLabel, entity) { }
-        internal EclipseNode(RELATIONSHIP relationship, DirectionEnum direction, AliasResult nodeAlias, string neo4jLabel = null, Entity entity = null) : base(relationship, direction, neo4jLabel, entity)
+        internal CostNode(RELATIONSHIP relationship, DirectionEnum direction, string neo4jLabel = null, Entity entity = null) : base(relationship, direction, neo4jLabel, entity) { }
+        internal CostNode(RELATIONSHIP relationship, DirectionEnum direction, AliasResult nodeAlias, string neo4jLabel = null, Entity entity = null) : base(relationship, direction, neo4jLabel, entity)
         {
             NodeAlias = nodeAlias;
         }
 
-        public EclipseNode Where(JsNotation<string> ActivationEffect = default, JsNotation<string> BaseEffect = default, JsNotation<string> EclipseEffect = default, JsNotation<string> EnteringEffect = default, JsNotation<string> Id = default, JsNotation<string> LeavingEffect = default, JsNotation<string> LoosingEffect = default, JsNotation<string> Lore = default, JsNotation<string> MandatoryActivationEffect = default, JsNotation<string> Name = default, JsNotation<string> PermanentEffect = default, JsNotation<string> ReactionEffect = default)
+        public CostNode Where(JsNotation<string> ActivationEffect = default, JsNotation<string> BaseEffect = default, JsNotation<string> EnteringEffect = default, JsNotation<string> Id = default, JsNotation<string> LeavingEffect = default, JsNotation<string> LoosingEffect = default, JsNotation<string> Lore = default, JsNotation<string> MandatoryActivationEffect = default, JsNotation<string> Name = default, JsNotation<string> PermanentEffect = default, JsNotation<string> ReactionEffect = default)
         {
             if (InlineConditions is not null || InlineAssignments is not null)
                 throw new NotSupportedException("You cannot, at the same time, have inline-assignments and inline-conditions defined on a node.");
 
-            Lazy<EclipseAlias> alias = new Lazy<EclipseAlias>(delegate()
+            Lazy<CostAlias> alias = new Lazy<CostAlias>(delegate()
             {
                 this.Alias(out var a);
                 return a;
@@ -71,7 +65,6 @@ namespace DeckBuilder.Generated.Query
             List<QueryCondition> conditions = new List<QueryCondition>();
             if (ActivationEffect.HasValue) conditions.Add(new QueryCondition(alias.Value.ActivationEffect, Operator.Equals, ((IValue)ActivationEffect).GetValue()));
             if (BaseEffect.HasValue) conditions.Add(new QueryCondition(alias.Value.BaseEffect, Operator.Equals, ((IValue)BaseEffect).GetValue()));
-            if (EclipseEffect.HasValue) conditions.Add(new QueryCondition(alias.Value.EclipseEffect, Operator.Equals, ((IValue)EclipseEffect).GetValue()));
             if (EnteringEffect.HasValue) conditions.Add(new QueryCondition(alias.Value.EnteringEffect, Operator.Equals, ((IValue)EnteringEffect).GetValue()));
             if (Id.HasValue) conditions.Add(new QueryCondition(alias.Value.Id, Operator.Equals, ((IValue)Id).GetValue()));
             if (LeavingEffect.HasValue) conditions.Add(new QueryCondition(alias.Value.LeavingEffect, Operator.Equals, ((IValue)LeavingEffect).GetValue()));
@@ -86,12 +79,12 @@ namespace DeckBuilder.Generated.Query
 
             return this;
         }
-        public EclipseNode Assign(JsNotation<string> ActivationEffect = default, JsNotation<string> BaseEffect = default, JsNotation<string> EclipseEffect = default, JsNotation<string> EnteringEffect = default, JsNotation<string> Id = default, JsNotation<string> LeavingEffect = default, JsNotation<string> LoosingEffect = default, JsNotation<string> Lore = default, JsNotation<string> MandatoryActivationEffect = default, JsNotation<string> Name = default, JsNotation<string> PermanentEffect = default, JsNotation<string> ReactionEffect = default)
+        public CostNode Assign(JsNotation<string> ActivationEffect = default, JsNotation<string> BaseEffect = default, JsNotation<string> EnteringEffect = default, JsNotation<string> Id = default, JsNotation<string> LeavingEffect = default, JsNotation<string> LoosingEffect = default, JsNotation<string> Lore = default, JsNotation<string> MandatoryActivationEffect = default, JsNotation<string> Name = default, JsNotation<string> PermanentEffect = default, JsNotation<string> ReactionEffect = default)
         {
             if (InlineConditions is not null || InlineAssignments is not null)
                 throw new NotSupportedException("You cannot, at the same time, have inline-assignments and inline-conditions defined on a node.");
 
-            Lazy<EclipseAlias> alias = new Lazy<EclipseAlias>(delegate()
+            Lazy<CostAlias> alias = new Lazy<CostAlias>(delegate()
             {
                 this.Alias(out var a);
                 return a;
@@ -99,7 +92,6 @@ namespace DeckBuilder.Generated.Query
             List<Assignment> assignments = new List<Assignment>();
             if (ActivationEffect.HasValue) assignments.Add(new Assignment(alias.Value.ActivationEffect, ActivationEffect));
             if (BaseEffect.HasValue) assignments.Add(new Assignment(alias.Value.BaseEffect, BaseEffect));
-            if (EclipseEffect.HasValue) assignments.Add(new Assignment(alias.Value.EclipseEffect, EclipseEffect));
             if (EnteringEffect.HasValue) assignments.Add(new Assignment(alias.Value.EnteringEffect, EnteringEffect));
             if (Id.HasValue) assignments.Add(new Assignment(alias.Value.Id, Id));
             if (LeavingEffect.HasValue) assignments.Add(new Assignment(alias.Value.LeavingEffect, LeavingEffect));
@@ -115,59 +107,80 @@ namespace DeckBuilder.Generated.Query
             return this;
         }
 
-        public EclipseNode Alias(out EclipseAlias alias)
+        public CostNode Alias(out CostAlias alias)
         {
-            if (NodeAlias is EclipseAlias a)
+            if (NodeAlias is CostAlias a)
             {
                 alias = a;
             }
             else
             {
-                alias = new EclipseAlias(this);
+                alias = new CostAlias(this);
                 NodeAlias = alias;
             }
             return this;
         }
-        public EclipseNode Alias(out EclipseAlias alias, string name)
+        public CostNode Alias(out CostAlias alias, string name)
         {
-            if (NodeAlias is EclipseAlias a)
+            if (NodeAlias is CostAlias a)
             {
                 a.SetAlias(name);
                 alias = a;
             }
             else
             {
-                alias = new EclipseAlias(this, name);
+                alias = new CostAlias(this, name);
                 NodeAlias = alias;
             }
             return this;
         }
 
-        public EclipseNode UseExistingAlias(AliasResult alias)
+        public CostNode UseExistingAlias(AliasResult alias)
         {
             NodeAlias = alias;
             IsReference = true;
             return this;
         }
 
-        public EclipseIn  In  { get { return new EclipseIn(this); } }
-        public class EclipseIn
+        public SbireNode CastToSbire()
         {
-            private EclipseNode Parent;
-            internal EclipseIn(EclipseNode parent)
+            if (this.Neo4jLabel is null)
+                throw new InvalidOperationException("Casting is not supported for virtual entities.");
+
+            if (FromRelationship is null)
+                throw new InvalidOperationException("Please use the right type immediately, casting is only support after you have match through a relationship.");
+
+            return new SbireNode(FromRelationship, Direction, NodeAlias, this.Neo4jLabel, this.Entity);
+        }
+
+        public SbireUniqueNode CastToSbireUnique()
+        {
+            if (this.Neo4jLabel is null)
+                throw new InvalidOperationException("Casting is not supported for virtual entities.");
+
+            if (FromRelationship is null)
+                throw new InvalidOperationException("Please use the right type immediately, casting is only support after you have match through a relationship.");
+
+            return new SbireUniqueNode(FromRelationship, Direction, NodeAlias, this.Neo4jLabel, this.Entity);
+        }
+
+        public CostIn  In  { get { return new CostIn(this); } }
+        public class CostIn
+        {
+            private CostNode Parent;
+            internal CostIn(CostNode parent)
             {
                 Parent = parent;
             }
-            public IFromIn_ECLIPSING_REL ECLIPSING { get { return new ECLIPSING_REL(Parent, DirectionEnum.In); } }
-            public IFromIn_HAS_COST_TOKEN_REL HAS_COST_TOKEN { get { return new HAS_COST_TOKEN_REL(Parent, DirectionEnum.In); } }
+            public IFromIn_HAS_VALUE_TOKEN_REL HAS_VALUE_TOKEN { get { return new HAS_VALUE_TOKEN_REL(Parent, DirectionEnum.In); } }
 
         }
 
-        public EclipseOut Out { get { return new EclipseOut(this); } }
-        public class EclipseOut
+        public CostOut Out { get { return new CostOut(this); } }
+        public class CostOut
         {
-            private EclipseNode Parent;
-            internal EclipseOut(EclipseNode parent)
+            private CostNode Parent;
+            internal CostOut(CostNode parent)
             {
                 Parent = parent;
             }
@@ -175,32 +188,31 @@ namespace DeckBuilder.Generated.Query
         }
     }
 
-    public class EclipseAlias : AliasResult<EclipseAlias, EclipseListAlias>
+    public class CostAlias : AliasResult<CostAlias, CostListAlias>
     {
-        internal EclipseAlias(EclipseNode parent)
+        internal CostAlias(CostNode parent)
         {
             Node = parent;
         }
-        internal EclipseAlias(EclipseNode parent, string name)
+        internal CostAlias(CostNode parent, string name)
         {
             Node = parent;
             AliasName = name;
         }
         internal void SetAlias(string name) => AliasName = name;
 
-        private  EclipseAlias(Func<QueryTranslator, string> function, object[] arguments, Type type) : base(function, arguments, type) { }
-        private  EclipseAlias(FieldResult parent, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(parent, function, arguments, type) { }
-        private  EclipseAlias(AliasResult alias, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(alias, function, arguments, type)
+        private  CostAlias(Func<QueryTranslator, string> function, object[] arguments, Type type) : base(function, arguments, type) { }
+        private  CostAlias(FieldResult parent, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(parent, function, arguments, type) { }
+        private  CostAlias(AliasResult alias, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(alias, function, arguments, type)
         {
             Node = alias.Node;
         }
 
-        public Assignment[] Assign(JsNotation<string> ActivationEffect = default, JsNotation<string> BaseEffect = default, JsNotation<string> EclipseEffect = default, JsNotation<string> EnteringEffect = default, JsNotation<string> Id = default, JsNotation<string> LeavingEffect = default, JsNotation<string> LoosingEffect = default, JsNotation<string> Lore = default, JsNotation<string> MandatoryActivationEffect = default, JsNotation<string> Name = default, JsNotation<string> PermanentEffect = default, JsNotation<string> ReactionEffect = default)
+        public Assignment[] Assign(JsNotation<string> ActivationEffect = default, JsNotation<string> BaseEffect = default, JsNotation<string> EnteringEffect = default, JsNotation<string> Id = default, JsNotation<string> LeavingEffect = default, JsNotation<string> LoosingEffect = default, JsNotation<string> Lore = default, JsNotation<string> MandatoryActivationEffect = default, JsNotation<string> Name = default, JsNotation<string> PermanentEffect = default, JsNotation<string> ReactionEffect = default)
         {
             List<Assignment> assignments = new List<Assignment>();
             if (ActivationEffect.HasValue) assignments.Add(new Assignment(this.ActivationEffect, ActivationEffect));
             if (BaseEffect.HasValue) assignments.Add(new Assignment(this.BaseEffect, BaseEffect));
-            if (EclipseEffect.HasValue) assignments.Add(new Assignment(this.EclipseEffect, EclipseEffect));
             if (EnteringEffect.HasValue) assignments.Add(new Assignment(this.EnteringEffect, EnteringEffect));
             if (Id.HasValue) assignments.Add(new Assignment(this.Id, Id));
             if (LeavingEffect.HasValue) assignments.Add(new Assignment(this.LeavingEffect, LeavingEffect));
@@ -223,18 +235,17 @@ namespace DeckBuilder.Generated.Query
                 {
                     m_AliasFields = new Dictionary<string, FieldResult>()
                     {
-                        { "EclipseEffect", new StringResult(this, "EclipseEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Eclipse"].Properties["EclipseEffect"]) },
-                        { "Name", new StringResult(this, "Name", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["Name"]) },
-                        { "BaseEffect", new StringResult(this, "BaseEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["BaseEffect"]) },
-                        { "ReactionEffect", new StringResult(this, "ReactionEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["ReactionEffect"]) },
-                        { "EnteringEffect", new StringResult(this, "EnteringEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["EnteringEffect"]) },
-                        { "LeavingEffect", new StringResult(this, "LeavingEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["LeavingEffect"]) },
-                        { "ActivationEffect", new StringResult(this, "ActivationEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["ActivationEffect"]) },
-                        { "MandatoryActivationEffect", new StringResult(this, "MandatoryActivationEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["MandatoryActivationEffect"]) },
-                        { "PermanentEffect", new StringResult(this, "PermanentEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["PermanentEffect"]) },
-                        { "LoosingEffect", new StringResult(this, "LoosingEffect", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["LoosingEffect"]) },
-                        { "Lore", new StringResult(this, "Lore", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["Lore"]) },
-                        { "Id", new StringResult(this, "Id", DeckBuilder.Model.Datastore.Model.Entities["Eclipse"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["Id"]) },
+                        { "Name", new StringResult(this, "Name", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["Name"]) },
+                        { "BaseEffect", new StringResult(this, "BaseEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["BaseEffect"]) },
+                        { "ReactionEffect", new StringResult(this, "ReactionEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["ReactionEffect"]) },
+                        { "EnteringEffect", new StringResult(this, "EnteringEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["EnteringEffect"]) },
+                        { "LeavingEffect", new StringResult(this, "LeavingEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["LeavingEffect"]) },
+                        { "ActivationEffect", new StringResult(this, "ActivationEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["ActivationEffect"]) },
+                        { "MandatoryActivationEffect", new StringResult(this, "MandatoryActivationEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["MandatoryActivationEffect"]) },
+                        { "PermanentEffect", new StringResult(this, "PermanentEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["PermanentEffect"]) },
+                        { "LoosingEffect", new StringResult(this, "LoosingEffect", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["LoosingEffect"]) },
+                        { "Lore", new StringResult(this, "Lore", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["Lore"]) },
+                        { "Id", new StringResult(this, "Id", DeckBuilder.Model.Datastore.Model.Entities["Cost"], DeckBuilder.Model.Datastore.Model.Entities["Card"].Properties["Id"]) },
                     };
                 }
                 return m_AliasFields;
@@ -242,20 +253,9 @@ namespace DeckBuilder.Generated.Query
         }
         private IReadOnlyDictionary<string, FieldResult> m_AliasFields = null;
 
-        public EclipseNode.EclipseIn In { get { return new EclipseNode.EclipseIn(new EclipseNode(this, true)); } }
-        public EclipseNode.EclipseOut Out { get { return new EclipseNode.EclipseOut(new EclipseNode(this, true)); } }
+        public CostNode.CostIn In { get { return new CostNode.CostIn(new CostNode(this, true)); } }
+        public CostNode.CostOut Out { get { return new CostNode.CostOut(new CostNode(this, true)); } }
 
-        public StringResult EclipseEffect
-        {
-            get
-            {
-                if (m_EclipseEffect is null)
-                    m_EclipseEffect = (StringResult)AliasFields["EclipseEffect"];
-
-                return m_EclipseEffect;
-            }
-        }
-        private StringResult m_EclipseEffect = null;
         public StringResult Name
         {
             get
@@ -377,9 +377,9 @@ namespace DeckBuilder.Generated.Query
             }
         }
         private StringResult m_Id = null;
-        public AsResult As(string aliasName, out EclipseAlias alias)
+        public AsResult As(string aliasName, out CostAlias alias)
         {
-            alias = new EclipseAlias((EclipseNode)Node)
+            alias = new CostAlias((CostNode)Node)
             {
                 AliasName = aliasName
             };
@@ -387,16 +387,16 @@ namespace DeckBuilder.Generated.Query
         }
     }
 
-    public class EclipseListAlias : ListResult<EclipseListAlias, EclipseAlias>, IAliasListResult
+    public class CostListAlias : ListResult<CostListAlias, CostAlias>, IAliasListResult
     {
-        private EclipseListAlias(Func<QueryTranslator, string> function, object[] arguments, Type type) : base(function, arguments, type) { }
-        private EclipseListAlias(FieldResult parent, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(parent, function, arguments, type) { }
-        private EclipseListAlias(AliasResult alias, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(alias, function, arguments, type) { }
+        private CostListAlias(Func<QueryTranslator, string> function, object[] arguments, Type type) : base(function, arguments, type) { }
+        private CostListAlias(FieldResult parent, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(parent, function, arguments, type) { }
+        private CostListAlias(AliasResult alias, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(alias, function, arguments, type) { }
     }
-    public class EclipseJaggedListAlias : ListResult<EclipseJaggedListAlias, EclipseListAlias>, IAliasJaggedListResult
+    public class CostJaggedListAlias : ListResult<CostJaggedListAlias, CostListAlias>, IAliasJaggedListResult
     {
-        private EclipseJaggedListAlias(Func<QueryTranslator, string> function, object[] arguments, Type type) : base(function, arguments, type) { }
-        private EclipseJaggedListAlias(FieldResult parent, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(parent, function, arguments, type) { }
-        private EclipseJaggedListAlias(AliasResult alias, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(alias, function, arguments, type) { }
+        private CostJaggedListAlias(Func<QueryTranslator, string> function, object[] arguments, Type type) : base(function, arguments, type) { }
+        private CostJaggedListAlias(FieldResult parent, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(parent, function, arguments, type) { }
+        private CostJaggedListAlias(AliasResult alias, Func<QueryTranslator, string> function, object[] arguments = null, Type type = null) : base(alias, function, arguments, type) { }
     }
 }

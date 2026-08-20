@@ -148,6 +148,17 @@ namespace DeckBuilder.Generated.Query
             return this;
         }
 
+        public SbireUniqueIn  In  { get { return new SbireUniqueIn(this); } }
+        public class SbireUniqueIn
+        {
+            private SbireUniqueNode Parent;
+            internal SbireUniqueIn(SbireUniqueNode parent)
+            {
+                Parent = parent;
+            }
+            public IFromIn_HAS_VALUE_TOKEN_REL HAS_VALUE_TOKEN { get { return new HAS_VALUE_TOKEN_REL(Parent, DirectionEnum.In); } }
+
+        }
 
         public SbireUniqueOut Out { get { return new SbireUniqueOut(this); } }
         public class SbireUniqueOut
@@ -226,6 +237,7 @@ namespace DeckBuilder.Generated.Query
         }
         private IReadOnlyDictionary<string, FieldResult> m_AliasFields = null;
 
+        public SbireUniqueNode.SbireUniqueIn In { get { return new SbireUniqueNode.SbireUniqueIn(new SbireUniqueNode(this, true)); } }
         public SbireUniqueNode.SbireUniqueOut Out { get { return new SbireUniqueNode.SbireUniqueOut(new SbireUniqueNode(this, true)); } }
 
         public StringResult Name

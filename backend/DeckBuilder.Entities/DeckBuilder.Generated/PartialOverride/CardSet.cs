@@ -13,7 +13,8 @@ public partial class CardSet
         return new CardSetModel()
         {
             Id = Guid.Parse(cardSet.Id),
-            Name = cardSet.Name
+            Name = cardSet.Name,
+            CardCount = cardSet.Cards.Count
         };
     }
 }

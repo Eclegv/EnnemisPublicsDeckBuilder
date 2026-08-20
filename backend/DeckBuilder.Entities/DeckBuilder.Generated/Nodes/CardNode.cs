@@ -141,6 +141,28 @@ namespace DeckBuilder.Generated.Query
             return this;
         }
 
+        public ValueNode CastToValue()
+        {
+            if (this.Neo4jLabel is null)
+                throw new InvalidOperationException("Casting is not supported for virtual entities.");
+
+            if (FromRelationship is null)
+                throw new InvalidOperationException("Please use the right type immediately, casting is only support after you have match through a relationship.");
+
+            return new ValueNode(FromRelationship, Direction, NodeAlias, this.Neo4jLabel, this.Entity);
+        }
+
+        public CostNode CastToCost()
+        {
+            if (this.Neo4jLabel is null)
+                throw new InvalidOperationException("Casting is not supported for virtual entities.");
+
+            if (FromRelationship is null)
+                throw new InvalidOperationException("Please use the right type immediately, casting is only support after you have match through a relationship.");
+
+            return new CostNode(FromRelationship, Direction, NodeAlias, this.Neo4jLabel, this.Entity);
+        }
+
         public BossNode CastToBoss()
         {
             if (this.Neo4jLabel is null)

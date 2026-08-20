@@ -19,6 +19,8 @@ namespace DeckBuilder.Generated.Manipulation
         string Name { get; }
         string Id { get; }
         IEnumerable<ICard> Cards { get; }
+        IEnumerable<IValue> Cards_Value { get; }
+        IEnumerable<ICost> Cards_Cost { get; }
         IEnumerable<Boss> Cards_Boss { get; }
         IEnumerable<Action> Cards_Action { get; }
         IEnumerable<Sbire> Cards_Sbire { get; }
@@ -200,6 +202,8 @@ namespace DeckBuilder.Generated.Manipulation
         public string Name { get { LazyGet(); return InnerData.Name; } set { if (LazySet(Members.Name, InnerData.Name, value)) InnerData.Name = value; } }
         public string Id { get { return InnerData.Id; } set { KeySet(() => InnerData.Id = value); } }
         public EntityCollection<ICard> Cards { get { return InnerData.Cards; } }
+        public IEnumerable<IValue> Cards_Value { get { return InnerData.Cards.Where(item => item is IValue).Cast<IValue>(); } }
+        public IEnumerable<ICost> Cards_Cost { get { return InnerData.Cards.Where(item => item is ICost).Cast<ICost>(); } }
         public IEnumerable<Boss> Cards_Boss { get { return InnerData.Cards.Where(item => item is Boss).Cast<Boss>(); } }
         public IEnumerable<Action> Cards_Action { get { return InnerData.Cards.Where(item => item is Action).Cast<Action>(); } }
         public IEnumerable<Sbire> Cards_Sbire { get { return InnerData.Cards.Where(item => item is Sbire).Cast<Sbire>(); } }
@@ -697,6 +701,8 @@ namespace DeckBuilder.Generated.Manipulation
         string ICardSetOriginalData.Name { get { return OriginalData.Name; } }
         string ICardSetOriginalData.Id { get { return OriginalData.Id; } }
         IEnumerable<ICard> ICardSetOriginalData.Cards { get { return OriginalData.Cards.OriginalData; } }
+        IEnumerable<IValue> ICardSetOriginalData.Cards_Value { get { return OriginalData.Cards.OriginalData.Where(item => item is IValue).Select(item => item as IValue); } }
+        IEnumerable<ICost> ICardSetOriginalData.Cards_Cost { get { return OriginalData.Cards.OriginalData.Where(item => item is ICost).Select(item => item as ICost); } }
         IEnumerable<Boss> ICardSetOriginalData.Cards_Boss { get { return OriginalData.Cards.OriginalData.Where(item => item is Boss).Select(item => item as Boss); } }
         IEnumerable<Action> ICardSetOriginalData.Cards_Action { get { return OriginalData.Cards.OriginalData.Where(item => item is Action).Select(item => item as Action); } }
         IEnumerable<Sbire> ICardSetOriginalData.Cards_Sbire { get { return OriginalData.Cards.OriginalData.Where(item => item is Sbire).Select(item => item as Sbire); } }

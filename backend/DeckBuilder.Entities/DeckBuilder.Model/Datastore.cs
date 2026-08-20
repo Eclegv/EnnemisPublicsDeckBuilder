@@ -37,6 +37,16 @@ namespace DeckBuilder.Model
 				.SetKey("Id")
 				.HasStaticData(true);
 
+			Entities
+				.New("Value", Entities["Card"])
+				.Abstract(true)
+				.Virtual(true);
+				
+			Entities
+				.New("Cost", Entities["Card"])
+				.Abstract(true)
+				.Virtual(true);
+
             Entities
                 .New("Boss", Entities["Card"])
 				.HasStaticData(true);
@@ -44,16 +54,16 @@ namespace DeckBuilder.Model
                 .New("Action", Entities["Card"])
 				.HasStaticData(true);
             Entities
-                .New("Sbire", Entities["Card"])
+                .New("Sbire", Entities["Cost"])
 				.HasStaticData(true);
             Entities
-                .New("SbireUnique", Entities["Card"])
+                .New("SbireUnique", Entities["Cost"])
 				.HasStaticData(true);
             Entities
-                .New("Allie", Entities["Card"])
+                .New("Allie", Entities["Value"])
 				.HasStaticData(true);
             Entities
-                .New("Eclipse", Entities["Card"])
+                .New("Eclipse", Entities["Value"])
 				.AddProperty("EclipseEffect", typeof(string), true)
 				.HasStaticData(true);
             Entities
@@ -85,11 +95,11 @@ namespace DeckBuilder.Model
 				.SetInProperty("Ally", PropertyType.Collection); //Collection instead of lookup because it cannot find the lookup property
 
 			Relations
-				.New(Entities["Sbire"], Entities["Token"], "HAS_VALUE_TOKEN", "HAS_VALUE_TOKEN")
+				.New(Entities["Cost"], Entities["Token"], "HAS_VALUE_TOKEN", "HAS_VALUE_TOKEN")
 				.SetInProperty("Tokens", PropertyType.Collection);
 				
 			Relations
-				.New(Entities["Allie"], Entities["Token"], "HAS_COST_TOKEN", "HAS_COST_TOKEN")
+				.New(Entities["Value"], Entities["Token"], "HAS_COST_TOKEN", "HAS_COST_TOKEN")
 				.SetInProperty("Tokens", PropertyType.Collection);
 		}
 		
@@ -149,14 +159,14 @@ namespace DeckBuilder.Model
 
 			foreach(CardData cardData in newCards.Where(card => card.Type == "Eclipse"))
 			{
-				CardData eclipseAlly = newCards.SingleOrDefault(card => card.Card.Name == cardData.Card.Eclipse);
+				CardData eclipseAlly = newCards.SingleOrDefault(card => card.Card.Name == cardData.Card.EclipseEffect);
 
 				if(eclipseAlly is null)
-					eclipseAlly = previousVersionCards.SingleOrDefault(card => card.Card.Name == cardData.Card.Eclipse);
+					eclipseAlly = previousVersionCards.SingleOrDefault(card => card.Card.Name == cardData.Card.EclipseEffect);
 
 				if(eclipseAlly is null)
 					throw new InvalidDataException("Ally linked to Eclipse card is missing");
-				
+
 				cardData.Card = Entities[cardData.Type].Refactor.CreateNode(new
 				{
 					cardData.Card.Id,
@@ -173,10 +183,10 @@ namespace DeckBuilder.Model
 					cardData.Card.Lore,
 					cardData.Card.EclipseEffect,
 				});
-				cardData.Card.Allies.Add(eclipseAlly.Card);
+				cardData.Card.Ally.Add(eclipseAlly.Card);
 			}
 
-			foreach(CardData card in newCards)
+			foreach(CardData card in newCards.Where(card => card.Type == "Eclipse" || card.Type == "Allie" || card.Type == "Sbire" || card.Type == "SbireUnique" ))
 			{
 				ProcessValues(card.RawData["costs_values"] as JArray, card);
 				ProcessValues(card.RawData["provided_values"] as JArray, card);
@@ -185,8 +195,6 @@ namespace DeckBuilder.Model
 
 		private List<CardData> LoadCardsPriorTo(Version currentVersion)
 		{
-			Console.WriteLine($"Current Version: {currentVersion.ToString()}");
-
 			List<CardData> loadedCards = new();
 			List<Version> versions = 
 				Directory
@@ -229,15 +237,15 @@ namespace DeckBuilder.Model
 						Id = card["id"],
 						CardSet = cardSet,
 						Name = card["name"].ToString().ToUpper(),
-						BaseEffect = card["effect"]["base"].ToString(),
-						ReactionEffect = card["effect"]["reaction"].ToString(),
-						EnteringEffect = card["effect"]["entre"].ToString(),
-						LeavingEffect = card["effect"]["sortie"].ToString(),
-						ActivationEffect = card["effect"]["activation"].ToString(),
-						MandatoryActivationEffect = card["effect"]["activation obligatoire"].ToString(),
-						PermanentEffect = card["effect"]["permanent"].ToString(),
-						LoosingEffect = card["effect"]["defaite"].ToString(),
-						Lore = card["lore"].ToString(),
+						BaseEffect = card["effect"]["base"]?.ToString(),
+						ReactionEffect = card["effect"]["reaction"]?.ToString(),
+						EnteringEffect = card["effect"]["entre"]?.ToString(),
+						LeavingEffect = card["effect"]["sortie"]?.ToString(),
+						ActivationEffect = card["effect"]["activation"]?.ToString(),
+						MandatoryActivationEffect = card["effect"]["activation obligatoire"]?.ToString(),
+						PermanentEffect = card["effect"]["permanent"]?.ToString(),
+						LoosingEffect = card["effect"]["defaite"]?.ToString(),
+						Lore = card["lore"]?.ToString(),
 						EclipseEffect = card["effect"]["eclipse"]?.ToString()
 					},
 					Type = card["type"].ToString(),
