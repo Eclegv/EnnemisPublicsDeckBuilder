@@ -1,10 +1,11 @@
-using System;
-
 namespace models.Cards;
 
-public class Eclipse : Card
+public class Eclipse : Allie
 {
     public string EclipseEffect { get; set; }
 
-    public Guid AllieId { get; set; }
+    public Eclipse()
+    {
+        Type = GetType().Name;
+    }
 }
