@@ -1,6 +1,10 @@
+using System.Text.Json.Serialization;
 using Blueprint41.Core;
 using DeckBuilder.Model;
 using DotNetEnv;
+using webapi.Nodes.Cards.Repository;
+using webapi.Nodes.CardSets.Repository;
+using webapi.Nodes.CardSets.Service;
 using Driver = Blueprint41.Neo4j.Persistence.Driver.v5;
 
 public class Program
@@ -26,16 +30,22 @@ public class Program
         //     .AddScoped<UserService, UserService>();
 
         builder.Services
+				.AddHttpContextAccessor()
+				.AddScoped<CardRepository, CardRepository>()
+				.AddScoped<CardSetService, CardSetService>()
+				.AddScoped<CardSetRepository, CardSetRepository>();
+
+        builder.Services
             .AddCors()
-            .AddRouting();
+            .AddRouting()
+            .AddControllers()
+            .AddJsonOptions(options =>
+            { 
+            options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });;
 
 
         WebApplication app = builder.Build();
-
-        Console.WriteLine(configuration["Database:Url"]);
-        Console.WriteLine(configuration["Database:Auth"]);
-        Console.WriteLine(configuration["Database:Password"]);
-        Console.WriteLine(configuration["Database:Name"]);
 
         Driver.Neo4jPersistenceProvider provider =
             new(
@@ -58,6 +68,11 @@ public class Program
         app
             .UseWebSockets()
             .UseRouting();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
 
         app.Run();
 

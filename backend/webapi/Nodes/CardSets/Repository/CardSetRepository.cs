@@ -10,7 +10,10 @@ public class CardSetRepository
 {
     public CardSet? ReadCardSet(Guid id)
     {
-        return CardSetEntity.Load(id.ToString());
+        using (Transaction.Begin())
+        {
+            return CardSetEntity.LoadById(id.ToString());
+        }
     }
 
     public List<CardSet> ReadAllCardSet()
@@ -21,12 +24,12 @@ public class CardSetRepository
             var query = Transaction.CompiledQuery
                 .Match
                 (
-                    Blueprint41.Query.Node.CardSet.Alias(out var cardSet)
+                    Node.CardSet.Alias(out var cardSet)
                 )
                 .Return(cardSet)
                 .Compile();
 
-            cardSet = CardSetEntity.LoadWhere(query).ConvertAll<CardSet>(cs => cs!);
+            cardSets = CardSetEntity.LoadWhere(query).ConvertAll<CardSet>(cs => cs!);
         }
 
         return cardSets;

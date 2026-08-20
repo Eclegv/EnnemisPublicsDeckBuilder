@@ -26,6 +26,10 @@ public class CardSetService
 
     public List<Card> ReadCardsFromCardSet(ReadCardsFromCardSetInput input)
     {
+        CardSet? cardSet = _cardSetRepository.ReadCardSet(input.CardSetId);
+        Console.WriteLine($"CardSet Is null : {cardSet is null} - {input.CardSetId}");
+
+
         if(_cardSetRepository.ReadCardSet(input.CardSetId) is null)
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
