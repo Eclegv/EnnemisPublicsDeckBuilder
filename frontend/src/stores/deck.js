@@ -18,7 +18,7 @@ const state = reactive({
   selectedSetGuids: [],
   deck: {},
   searchQuery: '',
-  filteredCardTypes: ['Action', 'Allie', 'Boss', 'Eclipse', 'Reaction', 'Sbire', 'SbireUnique', 'Valise'],
+  filteredCardTypes: [],
   loadingSets: false,
   loadingCards: false,
   error: null
@@ -58,7 +58,7 @@ export const filteredCards = computed(() => {
 })
 
 export const filteredCardsByType = computed(() => {
-  if (!filteredCards) return filteredCards.value
+  if (filteredCardTypes.value.length == 0) return filteredCards.value
   return filteredCards.value.filter(c =>
     state.filteredCardTypes.includes(c.type)
   )
