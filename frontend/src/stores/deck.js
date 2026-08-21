@@ -2,6 +2,7 @@ import { reactive, computed } from 'vue'
 import { getCardSets, getCardsBySet } from '../api/client.js'
 
 export const TOKENS = ['Solidity', 'Obscurantism', 'Notoriety', 'Idea', 'Violence']
+export const TYPES = ['Action', 'Allie', 'Boss', 'Eclipse', 'Reaction', 'Sbire', 'SbireUnique', 'Valise']
 
 export const COLORS = {
   Solidity: '#8B4513',
@@ -17,6 +18,7 @@ const state = reactive({
   selectedSetGuids: [],
   deck: {},
   searchQuery: '',
+  filteredCardTypes: ['Action', 'Allie', 'Boss', 'Eclipse', 'Reaction', 'Sbire', 'SbireUnique', 'Valise'],
   loadingSets: false,
   loadingCards: false,
   error: null
@@ -25,6 +27,7 @@ const state = reactive({
 export const sets = computed(() => state.sets)
 export const selectedSetGuids = computed(() => state.selectedSetGuids)
 export const searchQuery = computed(() => state.searchQuery)
+export const filteredCardTypes = computed(() => state.filteredCardTypes)
 export const loading = computed(() => state.loadingSets || state.loadingCards)
 export const error = computed(() => state.error)
 
@@ -35,7 +38,7 @@ export const allCards = computed(() => {
       cards.push(...state.cardsBySet[guid])
     }
   }
-  return cards
+  return cards.sort((a, b) => a.type.localeCompare(b.type))
 })
 
 export const filteredCards = computed(() => {
@@ -43,7 +46,21 @@ export const filteredCards = computed(() => {
   if (!q) return allCards.value
   return allCards.value.filter(c =>
     c.name?.toLowerCase().includes(q) ||
-    c.type?.toLowerCase().includes(q)
+    c.baseEffect?.toLowerCase().includes(q) ||
+    c.reactionEffect?.toLowerCase().includes(q) ||
+    c.enteringEffect?.toLowerCase().includes(q) ||
+    c.leavingEffect?.toLowerCase().includes(q) ||
+    c.activationEffect?.toLowerCase().includes(q) ||
+    c.mandatoryActivationEffect?.toLowerCase().includes(q) ||
+    c.permanentEffect?.toLowerCase().includes(q) ||
+    c.loosingEffect?.toLowerCase().includes(q)
+  )
+})
+
+export const filteredCardsByType = computed(() => {
+  if (!filteredCards) return filteredCards.value
+  return filteredCards.value.filter(c =>
+    state.filteredCardTypes.includes(c.type)
   )
 })
 
@@ -259,7 +276,7 @@ export async function loadCardsForSelected() {
     )
     results.forEach((data, i) => {
       const guid = toFetch[i]
-      const cards = data.sort((a, b) => a.type.localeCompare(b.type))
+      const cards = data
       removeCard(cards, "f2bc6275-eda0-43e3-a1d2-184536d27dbf")
       state.cardsBySet[guid] = Array.isArray(cards) ? cards : []
     })

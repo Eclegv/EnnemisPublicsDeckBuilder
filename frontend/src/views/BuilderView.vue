@@ -11,7 +11,8 @@
             :value="searchQuery"
             @input="e => setSearchQuery(e.target.value)"
           />
-          <span class="result-count">{{ filteredCards.length }} cards</span>
+          <span class="result-count">{{ filteredCardsByType.length }} cards</span>
+          <TypeFilter :modelValue="filteredCardTypes"></TypeFilter>
         </div>
 
         <div v-if="loading && filteredCards.length === 0" class="status">
@@ -22,7 +23,7 @@
           No cards found. Select a card set above.
         </div>
 
-        <CardGrid v-else :cards="filteredCards" />
+        <CardGrid v-else :cards="filteredCardsByType" />
       </div>
 
       <DeckSidebar />
@@ -32,10 +33,11 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { loadSets, searchQuery, filteredCards, loading, error, setSearchQuery } from '../stores/deck.js'
+import { loadSets, searchQuery, filteredCardsByType, filteredCardTypes, filteredCards, loading, error, setSearchQuery } from '../stores/deck.js'
 import SetFilterBar from '../components/SetFilterBar.vue'
 import CardGrid from '../components/CardGrid.vue'
 import DeckSidebar from '../components/DeckSidebar.vue'
+import TypeFilter from '../components/TypeFilter.vue'
 
 onMounted(loadSets)
 </script>
@@ -65,8 +67,7 @@ onMounted(loadSets)
 .search-bar {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid #2b5035;
   background: #142414;
 }
@@ -94,6 +95,7 @@ onMounted(loadSets)
 
 .result-count {
   font-size: 0.85rem;
+  padding: 0rem 0rem 0rem 0.5rem;
   color: #4a7a55;
   white-space: nowrap;
 }
