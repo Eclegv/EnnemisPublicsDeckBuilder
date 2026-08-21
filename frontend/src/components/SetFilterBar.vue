@@ -67,6 +67,7 @@ import { sets, isSetSelected, toggleSet } from '../stores/deck.js'
 
 .set-pill:hover {
   border-color: #d4af37;
+  background: #558963 !important;
 }
 
 .set-pill.active {
