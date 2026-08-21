@@ -4,7 +4,7 @@
       <div class="card-inner">
         <!-- Portrait image -->
         <div class="card-portrait">
-          <img v-if="card.id" :src="`/src/assets/img/${card.id}.png`" :alt="card.name" />
+          <img v-if="card.id" :src="`assets/img/${card.id}.png`" :alt="card.name" />
           <div v-else class="portrait-placeholder">
             <span>{{ card.name?.[0] || '◈' }}</span>
           </div>

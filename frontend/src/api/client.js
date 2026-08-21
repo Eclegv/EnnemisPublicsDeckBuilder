@@ -1,7 +1,7 @@
-const API_BASE = 'http://127.0.0.1:5245/api'
+const API_BASE = import.meta.env.VITE_BACKEND_URL
 
 async function request(url, method) {
-  const response = await fetch(`${API_BASE}${url}`, {
+  const response = await fetch(`${API_BASE || '/api'}${url}`, {
     method: method
   })
   if (!response.ok) {
@@ -11,7 +11,7 @@ async function request(url, method) {
 }
 
 export function getCardSets() {
-  return request('/cardset/', "GET")
+  return request('/cardset', "GET")
 }
 
 export function getCardsBySet(guid) {
