@@ -59,8 +59,8 @@
 
     <div class="deck-actions">
       <button class="action-btn clear" @click="clearDeck">Clear</button>
-      <button class="action-btn export">Export</button>
-      <button class="action-btn import">Import</button>
+      <button class="disabled export">Export</button>
+      <button class="disabled import">Import</button>
     </div>
   </aside>
 </template>
@@ -164,6 +164,21 @@ import ErrorButton from './ErrorButton.vue'
   letter-spacing: 0.05em;
 }
 
+.disabled {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #2b5035;
+  color: #5c5151;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: default;
+  background: #0a0b0a;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 .action-btn:hover {
   background: #1f3a1f;
   border-color: #d4af37;
