@@ -36,6 +36,9 @@ services:
   #     - QUICK_CONNECT_MG_PORT=7687
   webapi:
     build: ./backend
+    depends_on:
+      neo4j:
+        condition: service_healthy
     ports:
       - 5000:5000
     environment:
@@ -46,5 +49,7 @@ services:
 
   frontend:
     build: ./frontend
+    depends_on:
+      - webapi
     ports:
       - 80:80
