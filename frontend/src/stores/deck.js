@@ -89,13 +89,13 @@ export const errors = computed(() => {
   if(sbireCount.value < 8)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre d'action est inferieur a la valeur attendue : 8\n`
+    errorsData.text = `${errorsData.text}- Le nombre de sbire est inferieur a la valeur attendue : 8\n`
   }
 
   if(allieCount.value < 4)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre d'action est inferieur a la valeur attendue : 4\n`
+    errorsData.text = `${errorsData.text}- Le nombre d'alliés est inferieur a la valeur attendue : 4\n`
   }
 
   deckCards.value.forEach(element => {
