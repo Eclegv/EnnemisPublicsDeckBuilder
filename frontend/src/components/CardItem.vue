@@ -2,17 +2,6 @@
   <div class="card-wrapper" @click="$emit('add')">
     <div class="card-outer" :class="cardBorderClass">
       <div class="card-inner">
-        <!-- Cost icons (top-left) -->
-        <div class="cost-icons" v-if="!isLeader && card.cost">
-          <div
-            class="cost-icon"
-            :style="{ background: costColor(card.cost) }"
-            :title="card.cost"
-          >
-            {{ costIcon(card.cost) }}
-          </div>
-        </div>
-
         <!-- Portrait image -->
         <div class="card-portrait">
           <img v-if="card.id" :src="`/src/assets/img/${card.id}.png`" :alt="card.name" />
@@ -48,7 +37,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { COLORS, ICONS } from '../stores/deck.js'
+import { COLORS } from '../stores/deck.js'
 
 const props = defineProps({
   card: {
@@ -70,10 +59,6 @@ const cardBorderClass = computed(() => {
 
 function costColor(cost) {
   return COLORS[cost] || '#666'
-}
-
-function costIcon(cost) {
-  return ICONS[cost] || '?'
 }
 </script>
 

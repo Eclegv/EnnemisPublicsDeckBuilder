@@ -2,11 +2,12 @@
   <aside class="deck-sidebar">
     <div class="deck-header">
       <h2 class="deck-title">Deck</h2>
+      <ErrorButton :errors="errors"></ErrorButton>
     </div>
     <div class="deck-header-line">
       <h2 class="deck-title">Total</h2>
       <span class="deck-count" :class="{ 'deck-full': deckCount < 33 || deckCount > 33 }">
-        {{ deckCount }}/60
+        {{ deckCount }}/33
       </span>
     </div>
     <div class="deck-header-line">
@@ -17,7 +18,7 @@
     </div>
     <div class="deck-header-line">
       <h2 class="deck-title">Valise</h2>
-      <span class="deck-count" :class="{ 'deck-full': valiseCount < 1 || valiseCount > 3 }">
+      <span class="deck-count" :class="{ 'deck-full': valiseCount < 3 || valiseCount > 3 }">
         {{ valiseCount }}/3
       </span>
     </div>
@@ -25,12 +26,6 @@
       <h2 class="deck-title">Action</h2>
       <span class="deck-count" :class="{ 'deck-full': actionCount < 6 }">
         {{ actionCount }}/6+
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Reaction</h2>
-      <span class="deck-count" :class="{ 'deck-full': reactionCount < 6 }">
-        {{ reactionCount }}/6+
       </span>
     </div>
     <div class="deck-header-line">
@@ -48,7 +43,7 @@
 
     <div class="deck-header-bottom"></div>
 
-    <ManaCurve :curve="deckByCost" />
+    <ManaCurve :costs="deckByCost" :values="deckByValue" />
 
     <div class="deck-list">
       <div v-if="deckCards.length === 0" class="deck-empty">
@@ -71,9 +66,10 @@
 </template>
 
 <script setup>
-import { deckCards, deckCount, bossCount, valiseCount, actionCount, reactionCount, sbireCount, allieCount, deckByCost, clearDeck } from '../stores/deck.js'
+import { deckCards, deckCount, bossCount, valiseCount, actionCount, sbireCount, allieCount, deckByCost, deckByValue, clearDeck, errors } from '../stores/deck.js'
 import ManaCurve from './ManaCurve.vue'
 import DeckCardItem from './DeckCardItem.vue'
+import ErrorButton from './ErrorButton.vue'
 </script>
 
 <style scoped>
@@ -84,7 +80,7 @@ import DeckCardItem from './DeckCardItem.vue'
   border-left: 1px solid #2b5035;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .deck-header {
@@ -119,6 +115,8 @@ import DeckCardItem from './DeckCardItem.vue'
   color: #d4af37;
   background: #1a2e1a;
   padding: 0.3rem 0.7rem;
+  width: 3rem;
+  text-align: center;
   border-radius: 6px;
   border: 1px solid #2b5035;
 }

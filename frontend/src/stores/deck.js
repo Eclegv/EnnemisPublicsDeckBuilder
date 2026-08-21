@@ -1,7 +1,7 @@
 import { reactive, computed } from 'vue'
 import { getCardSets, getCardsBySet } from '../api/client.js'
 
-export const TYPES = ['Solidity', 'Obscurantism', 'Notoriety', 'Idea', 'Violence']
+export const TOKENS = ['Solidity', 'Obscurantism', 'Notoriety', 'Idea', 'Violence']
 
 export const COLORS = {
   Solidity: '#8B4513',
@@ -9,14 +9,6 @@ export const COLORS = {
   Notoriety: '#B22222',
   Idea: '#FFD700',
   Violence: '#8B0000'
-}
-
-export const ICONS = {
-  Solidity: 'S',
-  Obscurantism: 'O',
-  Notoriety: 'N',
-  Idea: 'I',
-  Violence: 'V'
 }
 
 const state = reactive({
@@ -57,11 +49,79 @@ export const filteredCards = computed(() => {
 
 export const deckCards = computed(() => {
   return Object.values(state.deck).sort((a, b) => {
-    const idxA = TYPES.indexOf(a.card.name)
-    const idxB = TYPES.indexOf(b.card.name)
+    const idxA = TOKENS.indexOf(a.card.name)
+    const idxB = TOKENS.indexOf(b.card.name)
     if (idxA !== idxB) return idxA - idxB
     return a.card.name.localeCompare(b.card.name)
   })
+})
+
+export const errors = computed(() => {
+  let errorsData = {
+    count: 0,
+    text: ""
+  }
+
+  if(deckCount.value != 33)
+  {
+    errorsData.count++
+    errorsData.text = `${errorsData.text}- Le total de carte est ${deckCount > 33 ? "superieur" : "inferieur"} a la taille attendu du deck : 33\n`
+  }
+
+  if(bossCount.value != 1)
+  {
+    errorsData.count++
+    errorsData.text = `${errorsData.text}- Le nombre de boss est ${deckCount > 1 ? "superieur" : "inferieur"} a la valeur attendue : 1\n`
+  }
+
+  if(valiseCount.value != 3)
+  {
+    errorsData.count++
+    errorsData.text = `${errorsData.text}- Le nombre de valise est ${deckCount > 3 ? "superieur" : "inferieur"} a la valeur attendue : 3\n`
+  }
+
+  if(actionCount.value < 6)
+  {
+    errorsData.count++
+    errorsData.text = `${errorsData.text}- Le nombre d'action est inferieur a la valeur attendue : 6\n`
+  }
+
+  if(sbireCount.value < 8)
+  {
+    errorsData.count++
+    errorsData.text = `${errorsData.text}- Le nombre d'action est inferieur a la valeur attendue : 8\n`
+  }
+
+  if(allieCount.value < 4)
+  {
+    errorsData.count++
+    errorsData.text = `${errorsData.text}- Le nombre d'action est inferieur a la valeur attendue : 4\n`
+  }
+
+  deckCards.value.forEach(element => {
+    if((element.card.type == "Allie" || element.card.type == "Eclipse") && element.count > 1)
+    {
+      errorsData.count++
+      errorsData.text = `${errorsData.text}- La carte ${element.card.type} ${element.card.name} est presente en plus d'un exemplaire\n`
+    }
+    if((element.card.type == "SbireUnique") && element.count > 1)
+    {
+      errorsData.count++
+      errorsData.text = `${errorsData.text}- La carte ${element.card.type} ${element.card.name} est presente en plus d'un exemplaire\n`
+    }
+    if(element.card.type == "Eclipse")
+    {
+       deckCards.value.forEach(card => {
+        if (element.card.eclipseEffect == card.card.name)
+        {
+          errorsData.count++
+          errorsData.text = `${errorsData.text}- La carte ${element.card.type} ${element.card.name} a son Eclipse ${card.card.name} presente dans le deck\n`
+        }
+      });
+    }
+  });
+
+  return errorsData
 })
 
 export const deckCount = computed(() =>
@@ -85,16 +145,13 @@ export const valiseCount = computed(() =>
 )
 
 export const actionCount = computed(() =>
-  countType(["Action"])
-)
-export const reactionCount = computed(() =>
-  countType(["Reaction"])
+  countType(["Action", "Reaction"])
 )
 
-function countType(cardTypes)
+function countType(cardTOKENS)
 {
   return deckCards.value.reduce((sum, item) => {
-    if(cardTypes.includes(item.card.type))
+    if(cardTOKENS.includes(item.card.type))
       return sum + item.count
     else
       return sum
@@ -103,12 +160,14 @@ function countType(cardTypes)
 
 export const deckByCost = computed(() => {
   const dist = {}
-  for (const t of TYPES) dist[t] = 0
+  for (const t of TOKENS) dist[t] = 0
 
   for (const item of deckCards.value) {
-    const cost = item.card.cost
-    if (cost && dist[cost] !== undefined) {
-      dist[cost] += item.count
+    const costs = item.card.costs
+    if (costs) {
+      costs.forEach(element => {
+        dist[element.name] += item.count
+      });
     }
   }
   return dist
@@ -116,12 +175,14 @@ export const deckByCost = computed(() => {
 
 export const deckByValue = computed(() => {
   const dist = {}
-  for (const t of TYPES) dist[t] = 0
+  for (const t of TOKENS) dist[t] = 0
 
   for (const item of deckCards.value) {
-    const value = item.card.value
-    if (cost && dist[value] !== undefined) {
-      dist[value] += item.count
+    const values = item.card.values
+    if (values) {
+      values.forEach(element => {
+        dist[element.name] += item.count
+      });
     }
   }
   return dist
@@ -198,7 +259,7 @@ export async function loadCardsForSelected() {
     )
     results.forEach((data, i) => {
       const guid = toFetch[i]
-      const cards = data
+      const cards = data.sort((a, b) => a.type.localeCompare(b.type))
       state.cardsBySet[guid] = Array.isArray(cards) ? cards : []
     })
   } catch (err) {

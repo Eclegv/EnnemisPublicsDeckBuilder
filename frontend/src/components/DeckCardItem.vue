@@ -1,16 +1,5 @@
 <template>
   <div class="deck-card-item">
-    <div class="deck-card-cost" v-if="item.card.cost">
-      <span
-        class="cost-badge"
-        :style="{ background: costColor(item.card.cost) }"
-        :title="item.card.cost"
-      >
-        {{ costIcon(item.card.cost) }}
-      </span>
-    </div>
-    <div class="deck-card-cost empty" v-else></div>
-
     <div class="deck-card-name">{{ item.card.name }}</div>
 
     <div class="deck-card-qty">
@@ -22,7 +11,7 @@
 </template>
 
 <script setup>
-import { addToDeck, removeFromDeck, COLORS, ICONS } from '../stores/deck.js'
+import { addToDeck, removeFromDeck, COLORS } from '../stores/deck.js'
 
 defineProps({
   item: {
@@ -35,9 +24,6 @@ function costColor(cost) {
   return COLORS[cost] || '#666'
 }
 
-function costIcon(cost) {
-  return ICONS[cost] || '?'
-}
 </script>
 
 <style scoped>
