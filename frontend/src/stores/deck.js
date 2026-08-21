@@ -260,6 +260,7 @@ export async function loadCardsForSelected() {
     results.forEach((data, i) => {
       const guid = toFetch[i]
       const cards = data.sort((a, b) => a.type.localeCompare(b.type))
+      removeCard(cards, "f2bc6275-eda0-43e3-a1d2-184536d27dbf")
       state.cardsBySet[guid] = Array.isArray(cards) ? cards : []
     })
   } catch (err) {
@@ -267,5 +268,26 @@ export async function loadCardsForSelected() {
     console.error(err)
   } finally {
     state.loadingCards = false
+  }
+}
+
+function removeCard(cards, id)
+{
+  if(!Array.isArray(cards))
+    return;
+
+  let index = -1;
+
+  for(let i = 0; i < cards.length; i++)
+  {
+    if(cards[i].id == id)
+    {
+      index = i
+    }
+  }
+
+  if(index != -1)
+  {
+    cards.splice(index, 1);
   }
 }
