@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/DeckBuilder.Entities/">
+    <Project Path="DeckBuilder.Entities/DeckBuilder.Generated/DeckBuilder.Generated.csproj" />
+    <Project Path="DeckBuilder.Entities/DeckBuilder.Model/DeckBuilder.Model.csproj" />
+  </Folder>
+  <Project Path="models/models.csproj" />
+  <Project Path="webapi/webapi.csproj" />
+</Solution>

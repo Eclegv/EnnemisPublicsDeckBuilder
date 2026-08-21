@@ -1,5 +1,4 @@
 using System.Net;
-using System.Web.Http;
 using models.Cards;
 using models.CardSets;
 using webapi.Nodes.Cards.Repository;
@@ -29,7 +28,7 @@ public class CardSetService
         CardSet? cardSet = _cardSetRepository.ReadCardSet(input.CardSetId);
 
         if(_cardSetRepository.ReadCardSet(input.CardSetId) is null)
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            throw new InvalidDataException();
 
         return _cardRepository.ReadAllCardsFromCardSet(new(input.CardSetId));
     }
