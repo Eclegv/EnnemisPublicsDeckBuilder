@@ -33,7 +33,13 @@ export const error = computed(() => state.error)
 
 export const allCards = computed(() => {
   const cards = []
-  for (const guid of state.selectedSetGuids) {
+  let setsToLoad = []
+  if(state.selectedSetGuids.length === 0)
+    setsToLoad = state.sets.map(set => set.id)
+  else
+    setsToLoad = state.selectedSetGuids
+
+  for (const guid of setsToLoad) {
     if (state.cardsBySet[guid]) {
       cards.push(...state.cardsBySet[guid])
     }
@@ -256,8 +262,7 @@ export async function loadSets() {
   try {
     const data = await getCardSets()
     state.sets = Array.isArray(data) ? data : []
-    state.selectedSetGuids = state.sets.map(s => s.id)
-    await loadCardsForSelected()
+    await loadCardsForSets()
   } catch (err) {
     state.error = 'Failed to load card sets.'
     console.error(err)
@@ -266,8 +271,8 @@ export async function loadSets() {
   }
 }
 
-export async function loadCardsForSelected() {
-  const toFetch = state.selectedSetGuids.filter(g => !state.cardsBySet[g])
+export async function loadCardsForSets() {
+  const toFetch = state.sets.map(set => set.id)
   if (toFetch.length === 0) return
   state.loadingCards = true
   try {
