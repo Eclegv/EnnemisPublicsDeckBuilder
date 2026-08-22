@@ -96,7 +96,7 @@ onMounted(loadSets)
 .result-count {
   font-size: 0.85rem;
   padding: 0rem 0rem 0rem 0.5rem;
-  color: #4a7a55;
+  color: #c8d8a8;
   white-space: nowrap;
 }
 

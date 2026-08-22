@@ -61,17 +61,16 @@ function tokenColor(token) {
   font-family: 'Cinzel', serif;
   font-size: 0.7rem;
   font-weight: 600;
-  color: #7aaa6a;
+  color: #abcea0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .dist-bars {
   display: flex;
   align-items: flex-end;
   gap: 0.5rem;
-  height: 80px;
 }
 
 .dist-bar-wrap {
@@ -108,9 +107,8 @@ function tokenColor(token) {
 }
 
 .dist-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #7aaa6a;
+  font-size: 0.8rem;
+  color: #abcea0;
   text-align: center;
 }
 </style>
