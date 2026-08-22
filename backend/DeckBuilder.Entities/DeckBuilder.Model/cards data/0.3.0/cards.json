@@ -3,7 +3,7 @@
     "name": "UN RÊVE D'ENFANT",
     "id": "b4e49c5a-391f-4802-9bad-5fc37a0c2365",
     "effect": {
-      "base": "Durable. Tous vos personnages en jeu possèdent 1 [Notoriety] supplémentaire."
+      "base": "Durable. Tous vos personnages en jeu possèdent 1 [Notoriété/Couronne] supplémentaire."
     },
     "lore": "Un petit pas pour son père, un grand pas pour l'humanité",
     "type": "Action",
@@ -21,8 +21,8 @@
     "costs_values": [],
     "provided_values": [
       "Violence",
-      "Idea",
-      "Obscurantism"
+      "Idée",
+      "Obscurantisme"
     ]
   },
   {
@@ -35,9 +35,9 @@
     "type": "SbireUnique",
     "costs_values": [],
     "provided_values": [
-      "Notoriety",
-      "Idea",
-      "Solidity"
+      "Notoriété",
+      "Idée",
+      "Solidité"
     ]
   },
   {
@@ -49,9 +49,9 @@
     "lore": "\"Oh boy...\"",
     "type": "SbireUnique",
     "costs_values": [
-      "Obscurantism",
-      "Idea",
-      "Solidity"
+      "Obscurantisme",
+      "Idée",
+      "Solidité"
     ],
     "provided_values": []
   },
@@ -90,9 +90,9 @@
     "lore": "\"Royal est l'homme qui brille de par sa simplicité.\"",
     "type": "Eclipse",
     "costs_values": [
-      "Notoriety",
-      "Idea",
-      "Solidity"
+      "Notoriété",
+      "Idée",
+      "Solidité"
     ],
     "provided_values": []
   },
@@ -106,8 +106,8 @@
     "lore": "\"Dommage que je sois programmé pour distribuer des bonbons.\"",
     "type": "Eclipse",
     "costs_values": [
-      "Obscurantism",
-      "Solidity"
+      "Obscurantisme",
+      "Solidité"
     ],
     "provided_values": []
   },
@@ -121,8 +121,8 @@
     "lore": "\"Père Nosfé, mets tes lunettes et lis-nous tout !\"",
     "type": "Eclipse",
     "costs_values": [
-      "Idea",
-      "Obscurantism"
+      "Idée",
+      "Obscurantisme"
     ],
     "provided_values": []
   },
@@ -135,8 +135,8 @@
     "lore": "\"Ennemispublics.fr ? Un jeu de cartes à collectionner français qui reprend des personnages du domaine public. Intéressant...\"",
     "type": "Allie",
     "costs_values": [
-      "Notoriety",
-      "Solidity"
+      "Notoriété",
+      "Solidité"
     ],
     "provided_values": []
   },
@@ -150,11 +150,11 @@
     "lore": "\"Libérée de son tombeau, la légende resurgit.\"",
     "type": "Allie",
     "costs_values": [
-      "Notoriety",
+      "Notoriété",
       "Violence",
-      "Idea",
-      "Obscurantism",
-      "Solidity"
+      "Idée",
+      "Obscurantisme",
+      "Solidité"
     ],
     "provided_values": []
   }

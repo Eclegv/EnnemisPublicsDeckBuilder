@@ -16,8 +16,6 @@ public class Program
         if (builder.Environment.EnvironmentName == "Development")
             Env.TraversePath().Load();
 
-        Console.WriteLine(builder.Environment.EnvironmentName);
-
         builder
             .Configuration
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true)
@@ -46,11 +44,6 @@ public class Program
 
 
         WebApplication app = builder.Build();
-
-        Console.WriteLine(configuration["Database:Url"]);
-        Console.WriteLine(configuration["Database:Auth"]);
-        Console.WriteLine(configuration["Database:Password"]);
-        Console.WriteLine(configuration["Database:Name"]);
 
         Driver.Neo4jPersistenceProvider provider =
             new(

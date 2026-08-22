@@ -10,8 +10,6 @@ public partial class Sbire
 {
     public CardModel ToModelCard()
     {
-        Console.WriteLine();
-
         return new SbireModel
         {
             Id = Guid.Parse(this.Id),

@@ -47,7 +47,7 @@
 
     <div class="deck-list">
       <div v-if="deckCards.length === 0" class="deck-empty">
-        Click cards to add them to your deck
+        Cliquez sur une carte pour l'ajouter a votre deck
       </div>
 
       <DeckCardItem
@@ -58,9 +58,9 @@
     </div>
 
     <div class="deck-actions">
-      <button class="action-btn clear" @click="clearDeck">Clear</button>
-      <button class="disabled export">Export</button>
-      <button class="disabled import">Import</button>
+      <button class="action-btn clear" @click="clearDeck">Effacer</button>
+      <button class="disabled import">Importer</button>
+      <button class="disabled export">Exporter</button>
     </div>
   </aside>
 </template>

@@ -1,14 +1,14 @@
 import { reactive, computed } from 'vue'
 import { getCardSets, getCardsBySet } from '../api/client.js'
 
-export const TOKENS = ['Solidity', 'Obscurantism', 'Notoriety', 'Idea', 'Violence']
+export const TOKENS = ['Solidité', 'Obscurantisme', 'Notoriété', 'Idée', 'Violence']
 export const TYPES = ['Action', 'Allie', 'Boss', 'Eclipse', 'Reaction', 'Sbire', 'SbireUnique', 'Valise']
 
 export const COLORS = {
-  Solidity: '#8B4513',
-  Obscurantism: '#4B0082',
-  Notoriety: '#B22222',
-  Idea: '#FFD700',
+  Solidité: '#8B4513',
+  Obscurantisme: '#4B0082',
+  Notoriété: '#B22222',
+  Idée: '#FFD700',
   Violence: '#8B0000'
 }
 

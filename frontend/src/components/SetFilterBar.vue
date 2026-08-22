@@ -1,6 +1,6 @@
 <template>
   <div class="set-filter-bar">
-    <div class="set-filter-label">Sets</div>
+    <div class="set-filter-label">Sets de cartes: </div>
     <div class="set-filter-scroll">
       <button
         v-for="set in sets"
