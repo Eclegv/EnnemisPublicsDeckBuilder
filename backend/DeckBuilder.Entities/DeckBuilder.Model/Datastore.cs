@@ -117,7 +117,7 @@ namespace DeckBuilder.Model
 		{
 			DataMigration.Run(delegate ()
 			{
-				InstantiateNewCards("0.3.0", "Promotional");
+				InstantiateNewCards("0.3.0", "Promotionnel");
 			});
 		}
 

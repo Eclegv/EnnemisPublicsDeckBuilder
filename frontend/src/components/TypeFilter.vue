@@ -33,13 +33,11 @@ const emit = defineEmits(['update:modelValue'])
 
 function toggle(type) {
   const idx = props.modelValue.indexOf(type)
-  console.log(idx)
   if (idx >= 0) {
     props.modelValue.splice(idx, 1)
   } else {
     props.modelValue.push(type)
   }
-  console.log(props.modelValue)
 }
 </script>
 

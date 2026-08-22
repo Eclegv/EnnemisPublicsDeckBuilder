@@ -17,7 +17,7 @@ import BuilderView from './views/BuilderView.vue'
 
 body {
   font-family: 'Crimson Text', 'Georgia', serif;
-  background: #0d1f12;
+  background: #09170d;
   color: #e8dcc8;
   min-height: 100vh;
   overflow: hidden;

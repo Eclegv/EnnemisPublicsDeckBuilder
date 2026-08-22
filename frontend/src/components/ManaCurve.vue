@@ -1,6 +1,6 @@
 <template>
-  <Distribution :title="`Cost Distribution`" :curve="costs"></Distribution>
-  <Distribution :title="`Value Distribution`" :curve="values"></Distribution>
+  <Distribution :title="`Symboles consommés`" :curve="costs"></Distribution>
+  <Distribution :title="`Symboles générés`" :curve="values"></Distribution>
 </template>
 
 <script setup>

@@ -7,11 +7,11 @@
         <div class="search-bar">
           <input
             type="text"
-            placeholder="Search cards..."
+            placeholder="Recherchez une carte..."
             :value="searchQuery"
             @input="e => setSearchQuery(e.target.value)"
           />
-          <span class="result-count">{{ filteredCardsByType.length }} cards</span>
+          <span class="result-count">{{ filteredCardsByType.length }} cartes</span>
           <TypeFilter :modelValue="filteredCardTypes"></TypeFilter>
         </div>
 
@@ -20,7 +20,7 @@
         </div>
         <div v-else-if="error" class="status error">{{ error }}</div>
         <div v-else-if="filteredCards.length === 0" class="status">
-          No cards found. Select a card set above.
+          Aucune carte trouvée. Veuillez selectionner un set.
         </div>
 
         <CardGrid v-else :cards="filteredCardsByType" />
