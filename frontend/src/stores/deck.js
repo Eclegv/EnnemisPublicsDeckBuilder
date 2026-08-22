@@ -44,7 +44,19 @@ export const allCards = computed(() => {
       cards.push(...state.cardsBySet[guid])
     }
   }
-  return cards.sort((a, b) => a.type.localeCompare(b.type))
+  return cards.sort((a, b) => {
+    if(a.type < b.type)
+      return -1;
+    else if(a.type > b.type)
+      return 1
+
+    if(a.name < b.name)
+      return -1;
+    else if(a.name > b.name)
+      return 1;
+    else
+      0
+  })
 })
 
 export const filteredCards = computed(() => {
