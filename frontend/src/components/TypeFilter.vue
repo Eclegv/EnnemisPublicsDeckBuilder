@@ -1,10 +1,10 @@
 <template>
-  <div class="cost-filter">
-    <div class="cost-checkboxes">
+  <div class="type-filter">
+    <div class="type-checkboxes">
       <label
         v-for="type in TYPES"
         :key="type"
-        class="cost-checkbox"
+        class="type-checkbox"
         :class="{ checked: modelValue.includes(type) }"
       >
         <input
@@ -13,7 +13,7 @@
           :checked="modelValue.includes(type)"
           @change="toggle(type)"
         />
-        <span class="cost-name">{{ type }}</span>
+        <span class="type-name">{{ type }}</span>
       </label>
     </div>
   </div>
@@ -31,25 +31,25 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-function toggle(cost) {
-  const idx = props.modelValue.indexOf(cost)
+function toggle(type) {
+  const idx = props.modelValue.indexOf(type)
   console.log(idx)
   if (idx >= 0) {
     props.modelValue.splice(idx, 1)
   } else {
-    props.modelValue.push(cost)
+    props.modelValue.push(type)
   }
   console.log(props.modelValue)
 }
 </script>
 
 <style scoped>
-.cost-filter {
+.type-filter {
   padding: 0.75rem 1.25rem;
   background: #142414;
 }
 
-.cost-filter-label {
+.type-filter-label {
   font-family: 'Cinzel', serif;
   font-size: 0.7rem;
   font-weight: 600;
@@ -59,13 +59,13 @@ function toggle(cost) {
   margin-bottom: 0.6rem;
 }
 
-.cost-checkboxes {
+.type-checkboxes {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.cost-checkbox {
+.type-checkbox {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -78,21 +78,22 @@ function toggle(cost) {
   user-select: none;
 }
 
-.cost-checkbox:hover {
-  border-color: #4a7a55;
+.type-checkbox:hover {
+  border-color: #d4af37;
+  background: #558963;
 }
 
-.cost-checkbox.checked {
+.type-checkbox.checked {
   background: #1f3a1f;
   border-color: #d4af37;
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.15);
 }
 
-.cost-checkbox input {
+.type-checkbox input {
   display: none;
 }
 
-.cost-swatch {
+.type-swatch {
   width: 18px;
   height: 18px;
   border-radius: 4px;
@@ -107,13 +108,13 @@ function toggle(cost) {
   flex-shrink: 0;
 }
 
-.cost-name {
+.type-name {
   font-family: 'Crimson Text', serif;
   font-size: 0.8rem;
   color: #c8d8a8;
 }
 
-.cost-checkbox.checked .cost-name {
+.type-checkbox.checked .type-name {
   color: #f0d878;
 }
 </style>

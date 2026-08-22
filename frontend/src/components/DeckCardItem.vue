@@ -75,6 +75,7 @@ function costColor(cost) {
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+  font-weight: 600;
 }
 
 .deck-card-qty {
