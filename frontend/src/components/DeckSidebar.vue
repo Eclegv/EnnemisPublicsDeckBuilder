@@ -136,8 +136,8 @@ import ErrorButton from './ErrorButton.vue'
 .deck-empty {
   padding: 2rem 1.25rem;
   text-align: center;
-  color: #3a6b45;
-  font-size: 0.9rem;
+  color: #abcea0b3;
+  font-size: 0.95rem;
   font-style: italic;
 }
 
