@@ -1,5 +1,5 @@
 <template>
-  <div class="card-wrapper" @click="$emit('add')">
+  <div class="card-wrapper"">
     <div class="card-outer" :class="cardBorderClass">
       <div class="card-inner">
         <!-- Portrait image -->
@@ -30,7 +30,7 @@
 
     <!-- Hover overlay -->
     <div class="card-overlay">
-      <button class="add-btn" @click.stop="$emit('add')">+ Add to Deck</button>
+      <button class="add-btn" @click.stop="$emit('add')">+ Ajouter au Deck</button>
     </div>
   </div>
 </template>
