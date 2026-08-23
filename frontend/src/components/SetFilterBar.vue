@@ -13,17 +13,6 @@
         <span class="set-count">{{ set.cardCount ?? '?' }}</span>
       </button>
     </div>
-    
-    <button
-      v-if="isCollapsed"
-      class="burger-btn"
-      @click="isCollapsed = false"
-      title="Open deck"
-    >
-      <span class="burger-icon">☰</span>
-      <span class="burger-count">{{ deckCount }}</span>
-    </button>
-
   </div>
 </template>
 
