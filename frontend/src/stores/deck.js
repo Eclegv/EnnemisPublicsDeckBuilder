@@ -242,6 +242,12 @@ export function setSearchQuery(q) {
 
 export function addToDeck(card) {
   const id = card.id
+  let isCardBoss = card.type === "Boss"
+  let currentBoss = Object.values(state.deck).filter(elem => elem.card.type === "Boss")[0]?.card;
+
+  if(isCardBoss && currentBoss)
+    removeFromDeck(currentBoss)
+
   if (state.deck[id]) {
     state.deck[id].count++
   } else {
