@@ -1,19 +1,19 @@
 <template>
   <div class="builder">
-    <SetFilterBar />
+    <SetFilterBar/>
 
     <div class="builder-body">
       <div class="card-area">
-        <div class="search-bar">
-          <input
-            type="text"
-            placeholder="Recherchez une carte..."
-            :value="searchQuery"
-            @input="e => setSearchQuery(e.target.value)"
-          />
-          <span class="result-count">{{ filteredCardsByType.length }} cartes</span>
-          <TypeFilter :modelValue="filteredCardTypes"></TypeFilter>
-        </div>
+          <div class="search-bar">
+            <input
+              type="text"
+              placeholder="Recherchez une carte..."
+              :value="searchQuery"
+              @input="e => setSearchQuery(e.target.value)"
+            />
+            <span class="result-count">{{ filteredCardsByType.length }} cartes</span>
+            <TypeFilter :modelValue="filteredCardTypes"></TypeFilter>
+          </div>
 
         <div v-if="loading && filteredCards.length === 0" class="status">
           Loading cards...
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { loadSets, searchQuery, filteredCardsByType, filteredCardTypes, filteredCards, loading, error, setSearchQuery } from '../stores/deck.js'
 import SetFilterBar from '../components/SetFilterBar.vue'
 import CardGrid from '../components/CardGrid.vue'
@@ -62,6 +62,25 @@ onMounted(loadSets)
   flex-direction: column;
   overflow: hidden;
   min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    flex-wrap: wrap;
+  }
+
+  .search-bar input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-bar .result-count {
+    flex-shrink: 0;
+  }
+
+  .search-bar :deep(.type-filter) {
+    flex-basis: 100%;
+  }
 }
 
 .search-bar {
