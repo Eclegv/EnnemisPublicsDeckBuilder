@@ -10,69 +10,69 @@
     </button>
 
     <aside class="deck-sidebar" :class="{ collapsed: isCollapsed }">
-    <div class="deck-header">
-      <h2 class="deck-title">Deck</h2>
-      <ErrorButton :errors="errors"></ErrorButton>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Total</h2>
-      <span class="deck-count" :class="{ 'deck-full': deckCount < 33 || deckCount > 33 }">
-        {{ deckCount }}/33
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Boss</h2>
-      <span class="deck-count" :class="{ 'deck-full': bossCount < 1 || bossCount > 1 }">
-        {{ bossCount }}/1
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Valise</h2>
-      <span class="deck-count" :class="{ 'deck-full': valiseCount < 3 || valiseCount > 3 }">
-        {{ valiseCount }}/3
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Action</h2>
-      <span class="deck-count" :class="{ 'deck-full': actionCount < 6 }">
-        {{ actionCount }}/6+
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Sbire</h2>
-      <span class="deck-count" :class="{ 'deck-full': sbireCount < 8 }">
-        {{ sbireCount }}/8+
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Alliés</h2>
-      <span class="deck-count" :class="{ 'deck-full': allieCount < 4 }">
-        {{ allieCount }}/4+
-      </span>
-    </div>
-
-    <div class="deck-header-bottom"></div>
-
-    <ManaCurve :costs="deckByCost" :values="deckByValue" />
-
-    <div class="deck-list">
-      <div v-if="deckCards.length === 0" class="deck-empty">
-        Cliquez sur une carte pour l'ajouter a votre deck
+      <div class="deck-header">
+        <h2 class="deck-title">Deck</h2>
+        <ErrorButton :errors="errors"></ErrorButton>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Total</h2>
+        <span class="deck-count" :class="{ 'deck-full': deckCount < 33 || deckCount > 33 }">
+          {{ deckCount }}/33
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Boss</h2>
+        <span class="deck-count" :class="{ 'deck-full': bossCount < 1 || bossCount > 1 }">
+          {{ bossCount }}/1
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Valise</h2>
+        <span class="deck-count" :class="{ 'deck-full': valiseCount < 3 || valiseCount > 3 }">
+          {{ valiseCount }}/3
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Action</h2>
+        <span class="deck-count" :class="{ 'deck-full': actionCount < 6 }">
+          {{ actionCount }}/6+
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Sbire</h2>
+        <span class="deck-count" :class="{ 'deck-full': sbireCount < 8 }">
+          {{ sbireCount }}/8+
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Alliés</h2>
+        <span class="deck-count" :class="{ 'deck-full': allieCount < 4 }">
+          {{ allieCount }}/4+
+        </span>
       </div>
 
-      <DeckCardItem
-        v-for="item in deckCards"
-        :key="item.card.id"
-        :item="item"
-      />
-    </div>
+      <div class="deck-header-bottom"></div>
 
-    <div class="deck-actions">
-      <button class="action-btn clear" @click="clearDeck">Effacer</button>
-      <button class="disabled import">Importer</button>
-      <button class="disabled export">Exporter</button>
-    </div>
-  </aside>
+      <ManaCurve :costs="deckByCost" :values="deckByValue" />
+
+      <div class="deck-list">
+        <div v-if="deckCards.length === 0" class="deck-empty">
+          Cliquez sur une carte pour l'ajouter a votre deck
+        </div>
+
+        <DeckCardItem
+          v-for="item in deckCards"
+          :key="item.card.id"
+          :item="item"
+        />
+      </div>
+
+      <div class="deck-actions">
+        <button class="action-btn clear" @click="clearDeck">Effacer</button>
+        <button class="disabled import">Importer</button>
+        <button class="disabled export">Exporter</button>
+      </div>
+    </aside>
   </div>
 </template>
 
@@ -160,7 +160,7 @@ const isCollapsed = ref(false)
   border-left: 1px solid #2b5035;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: auto;
 }
 
 .deck-header {
