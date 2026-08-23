@@ -1,12 +1,17 @@
 <template>
-  <div class="card-wrapper" @click="$emit('add')">
+  <div class="card-wrapper">
     <div class="card-outer" :class="cardBorderClass">
       <div class="card-inner">
         <!-- Portrait image -->
         <div class="card-portrait">
-          <img v-if="card.id" :src="`assets/img/${card.id}.png`" :alt="card.name" fetchpriority="high"/>
+          <img
+            v-if="card.id"
+            :src="`assets/img/${card.id}.png`"
+            :alt="card.name"
+            fetchpriority="high"
+          />
           <div v-else class="portrait-placeholder">
-            <span>{{ card.name?.[0] || '◈' }}</span>
+            <span>{{ card.name?.[0] || "◈" }}</span>
           </div>
         </div>
 
@@ -30,35 +35,35 @@
 
     <!-- Hover overlay -->
     <div class="card-overlay">
-      <button class="add-btn" @click.stop="$emit('add')">+ Add to Deck</button>
+      <button class="add-btn" @click.stop="$emit('add')">+ Ajouter au Deck</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { COLORS } from '../stores/deck.js'
+import { computed } from "vue";
+import { COLORS } from "../stores/deck.js";
 
 const props = defineProps({
   card: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-defineEmits(['add'])
+defineEmits(["add"]);
 
 const isLeader = computed(() => {
-  const t = (props.card.type || '').toLowerCase()
-  return t.includes('leader') || t.includes('commander') || props.card.isLeader
-})
+  const t = (props.card.type || "").toLowerCase();
+  return t.includes("leader") || t.includes("commander") || props.card.isLeader;
+});
 
 const cardBorderClass = computed(() => {
-  return isLeader.value ? 'border-leader' : 'border-regular'
-})
+  return isLeader.value ? "border-leader" : "border-regular";
+});
 
 function costColor(cost) {
-  return COLORS[cost] || '#666'
+  return COLORS[cost] || "#666";
 }
 </script>
 
@@ -81,12 +86,12 @@ function costColor(cost) {
   border-radius: 14px;
   padding: 4px;
   background: linear-gradient(145deg, #2b5035, #1a3a1f, #2b5035);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .border-leader {
   background: linear-gradient(145deg, #b22222, #8b0000, #b22222);
-  box-shadow: 0 4px 20px rgba(139, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 4px 20px rgba(139, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .border-regular {
@@ -101,7 +106,6 @@ function costColor(cost) {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 380px;
 }
 
 .cost-icons {
@@ -124,9 +128,9 @@ function costColor(cost) {
   font-size: 0.65rem;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-  border: 1px solid rgba(255,255,255,0.3);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .card-portrait {
@@ -137,7 +141,7 @@ function costColor(cost) {
 }
 
 .card-portrait::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -160,7 +164,7 @@ function costColor(cost) {
   justify-content: center;
   font-size: 4rem;
   color: #2b5035;
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
 }
 
 .card-namebar {
@@ -180,7 +184,7 @@ function costColor(cost) {
 }
 
 .card-name {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.9rem;
   font-weight: 700;
   color: #f0d878;
@@ -245,7 +249,7 @@ function costColor(cost) {
   border: none;
   padding: 0.7rem 1.8rem;
   border-radius: 8px;
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;

@@ -43,8 +43,23 @@ function toggle(type) {
 
 <style scoped>
 .type-filter {
+  display: flex;
   padding: 0.75rem 1.25rem;
   background: #142414;
+}
+
+@media (max-width: 768px) {
+  .type-filter {
+    width: 100%;
+    padding: 1rem 0rem 0rem 0rem;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .type-filter button {
+    flex-shrink: 0;
+  }
 }
 
 .type-filter-label {
@@ -61,6 +76,20 @@ function toggle(type) {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .type-checkboxes {
+    flex-direction: row;
+    padding-bottom: 0.5rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .type-checkboxes input {
+    flex-shrink: 0;
+  }
 }
 
 .type-checkbox {

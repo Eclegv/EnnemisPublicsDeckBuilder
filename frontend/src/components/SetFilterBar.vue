@@ -6,7 +6,7 @@
         v-for="set in sets"
         :key="set.id || set.guid"
         class="set-pill"
-        :class="{ active: isSetSelected(set.id || set.guid) }"
+        :class="{ active: isSetSelected(set.id) }"
         @click="toggleSet(set.id || set.guid)"
       >
         <span class="set-name">{{ set.name }}</span>

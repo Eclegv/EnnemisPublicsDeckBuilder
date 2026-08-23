@@ -1,68 +1,79 @@
 <template>
-  <aside class="deck-sidebar">
-    <div class="deck-header">
-      <h2 class="deck-title">Deck</h2>
-      <ErrorButton :errors="errors"></ErrorButton>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Total</h2>
-      <span class="deck-count" :class="{ 'deck-full': deckCount < 33 || deckCount > 33 }">
-        {{ deckCount }}/33
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Boss</h2>
-      <span class="deck-count" :class="{ 'deck-full': bossCount < 1 || bossCount > 1 }">
-        {{ bossCount }}/1
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Valise</h2>
-      <span class="deck-count" :class="{ 'deck-full': valiseCount < 3 || valiseCount > 3 }">
-        {{ valiseCount }}/3
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Action</h2>
-      <span class="deck-count" :class="{ 'deck-full': actionCount < 6 }">
-        {{ actionCount }}/6+
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Sbire</h2>
-      <span class="deck-count" :class="{ 'deck-full': sbireCount < 8 }">
-        {{ sbireCount }}/8+
-      </span>
-    </div>
-    <div class="deck-header-line">
-      <h2 class="deck-title">Alliés</h2>
-      <span class="deck-count" :class="{ 'deck-full': allieCount < 4 }">
-        {{ allieCount }}/4+
-      </span>
-    </div>
+  <div class="sidebar-wrapper">
+    <button
+      class="burger-btn"
+      @click="isCollapsed = !isCollapsed"
+      title="Open deck"
+    >
+      <span class="burger-icon">☰</span>
+      <span class="burger-count">{{ deckCount }}</span>
+    </button>
 
-    <div class="deck-header-bottom"></div>
-
-    <ManaCurve :costs="deckByCost" :values="deckByValue" />
-
-    <div class="deck-list">
-      <div v-if="deckCards.length === 0" class="deck-empty">
-        Cliquez sur une carte pour l'ajouter a votre deck
+    <aside class="deck-sidebar" :class="{ collapsed: isCollapsed }">
+      <div class="deck-header">
+        <h2 class="deck-title">Deck</h2>
+        <ErrorButton :errors="errors"></ErrorButton>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Total</h2>
+        <span class="deck-count" :class="{ 'deck-full': deckCount < 33 || deckCount > 33 }">
+          {{ deckCount }}/33
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Boss</h2>
+        <span class="deck-count" :class="{ 'deck-full': bossCount < 1 || bossCount > 1 }">
+          {{ bossCount }}/1
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Valise</h2>
+        <span class="deck-count" :class="{ 'deck-full': valiseCount < 3 || valiseCount > 3 }">
+          {{ valiseCount }}/3
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Action</h2>
+        <span class="deck-count" :class="{ 'deck-full': actionCount < 6 }">
+          {{ actionCount }}/6+
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Sbire</h2>
+        <span class="deck-count" :class="{ 'deck-full': sbireCount < 8 }">
+          {{ sbireCount }}/8+
+        </span>
+      </div>
+      <div class="deck-header-line">
+        <h2 class="deck-title">Alliés</h2>
+        <span class="deck-count" :class="{ 'deck-full': allieCount < 4 }">
+          {{ allieCount }}/4+
+        </span>
       </div>
 
-      <DeckCardItem
-        v-for="item in deckCards"
-        :key="item.card.id"
-        :item="item"
-      />
-    </div>
+      <div class="deck-header-bottom"></div>
 
-    <div class="deck-actions">
-      <button class="action-btn clear" @click="clearDeck">Effacer</button>
-      <button class="disabled import">Importer</button>
-      <button class="disabled export">Exporter</button>
-    </div>
-  </aside>
+      <ManaCurve :costs="deckByCost" :values="deckByValue" />
+
+      <div class="deck-list">
+        <div v-if="deckCards.length === 0" class="deck-empty">
+          Cliquez sur une carte pour l'ajouter a votre deck
+        </div>
+
+        <DeckCardItem
+          v-for="item in deckCards"
+          :key="item.card.id"
+          :item="item"
+        />
+      </div>
+
+      <div class="deck-actions">
+        <button class="action-btn clear" @click="clearDeck">Effacer</button>
+        <button class="disabled import">Importer</button>
+        <button class="disabled export">Exporter</button>
+      </div>
+    </aside>
+  </div>
 </template>
 
 <script setup>
@@ -70,9 +81,78 @@ import { deckCards, deckCount, bossCount, valiseCount, actionCount, sbireCount, 
 import ManaCurve from './ManaCurve.vue'
 import DeckCardItem from './DeckCardItem.vue'
 import ErrorButton from './ErrorButton.vue'
+import { ref } from 'vue'
+
+const isCollapsed = ref(false)
 </script>
 
 <style scoped>
+.sidebar-wrapper {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  width: 340px;
+  transition: width 0.25s ease;
+}
+
+.sidebar-wrapper:has(.deck-sidebar.collapsed) {
+  width: 0;
+}
+
+.sidebar-wrapper:has(.deck-sidebar.collapsed) .burger-btn {
+  transform: translate(-100%, -100%);
+}
+
+.burger-btn {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-100%, -100%);
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  padding: 0.6rem 0.4rem;
+  background: #142414;
+  border: 1px solid #2b5035;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.burger-btn:hover {
+  background: #1a2e1a;
+  border-color: #d4af37;
+}
+
+.burger-icon {
+  font-size: 1.1rem;
+  color: #d4af37;
+}
+
+.burger-count {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f0d878;
+  background: #0d1f12;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid #2b5035;
+}
+
+.deck-sidebar.collapsed {
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .deck-sidebar {
   width: 340px;
   min-width: 340px;
@@ -80,7 +160,7 @@ import ErrorButton from './ErrorButton.vue'
   border-left: 1px solid #2b5035;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: auto;
 }
 
 .deck-header {

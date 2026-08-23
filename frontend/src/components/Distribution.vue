@@ -1,12 +1,16 @@
 <template>
   <div class="cost-dist">
-    <div class="dist-title">{{ title }}</div>
-    <div class="dist-bars">
-      <div
-        v-for="token in TOKENS"
-        :key="token"
-        class="dist-bar-wrap"
-      >
+    <div class="dist-title">
+      <h4>{{ title }}</h4>
+
+      <button class="collapse-btn" @click="isCollapsed = !isCollapsed">
+        <span class="collapse-icon material-symbols-outlined">
+          keyboard_double_arrow_down
+        </span>
+      </button>
+    </div>
+    <div class="dist-bars" :class="{ collapsed: isCollapsed }">
+      <div v-for="token in TOKENS" :key="token" class="dist-bar-wrap">
         <div class="dist-value">{{ curve[token] || 0 }}</div>
         <div class="dist-bar-bg">
           <div
@@ -21,46 +25,55 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { TOKENS, COLORS } from '../stores/deck.js'
+import { computed, ref } from "vue";
+import { TOKENS, COLORS } from "../stores/deck.js";
 
 const props = defineProps({
   title: {
     type: String,
-    default: ""
+    default: "",
   },
   curve: {
     type: Object,
-    default: () => ({})
-  }
-})
+    default: () => ({}),
+  },
+});
 
 const maxVal = computed(() => {
-  const vals = Object.values(props.curve)
-  return vals.length > 0 ? Math.max(...vals, 1) : 1
-})
+  const vals = Object.values(props.curve);
+  return vals.length > 0 ? Math.max(...vals, 1) : 1;
+});
 
 function barHeight(token) {
-  const val = props.curve[token] || 0
-  return (val / maxVal.value) * 100
+  const val = props.curve[token] || 0;
+  return (val / maxVal.value) * 100;
 }
 
 function tokenColor(token) {
-  return COLORS[token] || '#666'
+  return COLORS[token] || "#666";
 }
 
+const isCollapsed = ref(false);
 </script>
 
 <style scoped>
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
 .cost-dist {
   padding: 0.75rem 1.25rem;
   border-bottom: 1px solid #2b5035;
 }
 
 .dist-title {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.7rem;
   font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   color: #abcea0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -68,9 +81,21 @@ function tokenColor(token) {
 }
 
 .dist-bars {
+  position: relative;
   display: flex;
-  align-items: flex-end;
+  flex-shrink: 0;
   gap: 0.5rem;
+  transition: width 0.25s ease;
+}
+
+.dist-bars:has(.collapsed) {
+  width: 0;
+}
+
+.dist-bars.collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .dist-bar-wrap {
@@ -110,5 +135,27 @@ function tokenColor(token) {
   font-size: 0.8rem;
   color: #abcea0;
   text-align: center;
+}
+
+.collapse-btn {
+  font-size: 1rem;
+
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0px;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.collapse-btn:hover {
+  background: #1a2e1a;
+  border-color: #d4af37;
+}
+
+.collapse-icon {
+  font-size: 1.1rem;
+  color: #d4af37;
 }
 </style>

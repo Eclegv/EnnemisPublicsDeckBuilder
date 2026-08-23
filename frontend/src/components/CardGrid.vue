@@ -1,24 +1,19 @@
 <template>
   <div class="card-grid">
-    <CardItem
-      v-for="card in cards"
-      :key="card.id"
-      :card="card"
-      @add="addToDeck(card)"
-    />
+    <CardItem v-for="card in cards" :key="card.id" :card="card" @add="addToDeck(card)" />
   </div>
 </template>
 
 <script setup>
-import { addToDeck } from '../stores/deck.js'
-import CardItem from './CardItem.vue'
+import { addToDeck } from "../stores/deck.js";
+import CardItem from "./CardItem.vue";
 
 defineProps({
   cards: {
     type: Array,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 
 <style scoped>
@@ -27,8 +22,14 @@ defineProps({
   overflow-y: auto;
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   gap: 1.5rem;
   align-content: start;
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
 }
 </style>
