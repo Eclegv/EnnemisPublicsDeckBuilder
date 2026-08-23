@@ -100,19 +100,19 @@ export const errors = computed(() => {
   if(deckCount.value != 33)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le total de carte est ${deckCount > 33 ? "superieur" : "inferieur"} a la taille attendu du deck : 33\n`
+    errorsData.text = `${errorsData.text}- Le total de carte est ${deckCount.value > 33 ? "superieur" : "inferieur"} a la taille attendu du deck : 33\n`
   }
 
   if(bossCount.value != 1)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre de boss est ${deckCount > 1 ? "superieur" : "inferieur"} a la valeur attendue : 1\n`
+    errorsData.text = `${errorsData.text}- Le nombre de boss est ${bossCount.value > 1 ? "superieur" : "inferieur"} a la valeur attendue : 1\n`
   }
 
   if(valiseCount.value != 3)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre de valise est ${deckCount > 3 ? "superieur" : "inferieur"} a la valeur attendue : 3\n`
+    errorsData.text = `${errorsData.text}- Le nombre de valise est ${valiseCount.value > 3 ? "superieur" : "inferieur"} a la valeur attendue : 3\n`
   }
 
   if(actionCount.value < 6)
