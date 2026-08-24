@@ -1,71 +1,58 @@
 <template>
   <div class="sidebar-wrapper">
-    <button
-      class="burger-btn"
-      @click="isCollapsed = !isCollapsed"
-      title="Open deck"
-    >
+    <button class="burger-btn" @click="isCollapsed = !isCollapsed" title="Open deck">
       <span class="burger-icon">☰</span>
       <span class="burger-count">{{ deckCount }}</span>
     </button>
 
     <aside class="deck-sidebar" :class="{ collapsed: isCollapsed }">
-      <div class="deck-header">
-        <h2 class="deck-title">Deck</h2>
-        <ErrorButton :errors="errors"></ErrorButton>
+      <div class="deck-list-header">
+        <Divider />
+        <span> Total {{ deckCount }}/33</span>
+        <Divider />
+        <ErrorButton :errors="errors.errorsByGroup['Deck']"></ErrorButton>
       </div>
-      <div class="deck-header-line">
-        <h2 class="deck-title">Total</h2>
-        <span class="deck-count" :class="{ 'deck-full': deckCount < 33 || deckCount > 33 }">
-          {{ deckCount }}/33
-        </span>
+      <div class="deck-list">
+        <div>
+          <DeckSection
+            :type="['Boss']"
+            :upperlimit="1"
+            :strictlimit="true"
+            :cardCount="bossCount"
+            :errors="errors.errorsByGroup['Boss']"
+          />
+          <DeckSection
+            :type="['Valise']"
+            :upperlimit="3"
+            :strictlimit="true"
+            :cardCount="valiseCount"
+            :errors="errors.errorsByGroup['Valise']"
+          />
+          <DeckSection
+            :type="['Action', 'Reaction']"
+            :upperlimit="6"
+            :strictlimit="false"
+            :cardCount="actionCount"
+            :errors="errors.errorsByGroup['Action']"
+          />
+          <DeckSection
+            :type="['Sbire', 'SbireUnique']"
+            :upperlimit="8"
+            :strictlimit="false"
+            :cardCount="sbireCount"
+            :errors="errors.errorsByGroup['Sbire']"
+          />
+          <DeckSection
+            :type="['Allie', 'Eclipse']"
+            :upperlimit="4"
+            :strictlimit="false"
+            :cardCount="allieCount"
+            :errors="errors.errorsByGroup['Allie']"
+          />
+        </div>
       </div>
-      <div class="deck-header-line">
-        <h2 class="deck-title">Boss</h2>
-        <span class="deck-count" :class="{ 'deck-full': bossCount < 1 || bossCount > 1 }">
-          {{ bossCount }}/1
-        </span>
-      </div>
-      <div class="deck-header-line">
-        <h2 class="deck-title">Valise</h2>
-        <span class="deck-count" :class="{ 'deck-full': valiseCount < 3 || valiseCount > 3 }">
-          {{ valiseCount }}/3
-        </span>
-      </div>
-      <div class="deck-header-line">
-        <h2 class="deck-title">Action</h2>
-        <span class="deck-count" :class="{ 'deck-full': actionCount < 6 }">
-          {{ actionCount }}/6+
-        </span>
-      </div>
-      <div class="deck-header-line">
-        <h2 class="deck-title">Sbire</h2>
-        <span class="deck-count" :class="{ 'deck-full': sbireCount < 8 }">
-          {{ sbireCount }}/8+
-        </span>
-      </div>
-      <div class="deck-header-line">
-        <h2 class="deck-title">Alliés</h2>
-        <span class="deck-count" :class="{ 'deck-full': allieCount < 4 }">
-          {{ allieCount }}/4+
-        </span>
-      </div>
-
-      <div class="deck-header-bottom"></div>
 
       <ManaCurve :costs="deckByCost" :values="deckByValue" />
-
-      <div class="deck-list">
-        <div v-if="deckCards.length === 0" class="deck-empty">
-          Cliquez sur une carte pour l'ajouter a votre deck
-        </div>
-
-        <DeckCardItem
-          v-for="item in deckCards"
-          :key="item.card.id"
-          :item="item"
-        />
-      </div>
 
       <div class="deck-actions">
         <button class="action-btn clear" @click="clearDeck">Effacer</button>
@@ -77,13 +64,29 @@
 </template>
 
 <script setup>
-import { deckCards, deckCount, bossCount, valiseCount, actionCount, sbireCount, allieCount, deckByCost, deckByValue, clearDeck, errors } from '../stores/deck.js'
-import ManaCurve from './ManaCurve.vue'
-import DeckCardItem from './DeckCardItem.vue'
-import ErrorButton from './ErrorButton.vue'
-import { ref } from 'vue'
+import {
+  deckCards,
+  deckCount,
+  bossCount,
+  valiseCount,
+  actionCount,
+  sbireCount,
+  allieCount,
+  deckByCost,
+  deckByValue,
+  clearDeck,
+  errors,
+  getDeckCardsByType,
+  isMobile,
+} from "../stores/deck.js";
+import ManaCurve from "./ManaCurve.vue";
+import DeckCardItem from "./DeckCardItem.vue";
+import DeckSection from "./DeckSection.vue";
+import ErrorButton from "./ErrorButton.vue";
+import Divider from "./Divider.vue";
+import { ref } from "vue";
 
-const isCollapsed = ref(false)
+const isCollapsed = ref(false || isMobile());
 </script>
 
 <style scoped>
@@ -101,6 +104,12 @@ const isCollapsed = ref(false)
 
 .sidebar-wrapper:has(.deck-sidebar.collapsed) .burger-btn {
   transform: translate(-100%, -100%);
+}
+
+.deck-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .burger-btn {
@@ -137,7 +146,7 @@ const isCollapsed = ref(false)
 }
 
 .burger-count {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.75rem;
   font-weight: 700;
   color: #f0d878;
@@ -160,7 +169,6 @@ const isCollapsed = ref(false)
   border-left: 1px solid #2b5035;
   display: flex;
   flex-direction: column;
-  overflow: auto;
 }
 
 .deck-header {
@@ -183,13 +191,13 @@ const isCollapsed = ref(false)
 }
 
 .deck-title {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 1.1rem;
   color: #f0d878;
 }
 
 .deck-count {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.85rem;
   font-weight: 700;
   color: #d4af37;
@@ -203,8 +211,6 @@ const isCollapsed = ref(false)
 
 .deck-full {
   color: #fd4141;
-  background: #ff000046;
-  border-color: #e85757;
 }
 
 .deck-list {
@@ -235,7 +241,7 @@ const isCollapsed = ref(false)
   border: 1px solid #2b5035;
   background: #1a2e1a;
   color: #c8d8a8;
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
@@ -250,7 +256,7 @@ const isCollapsed = ref(false)
   border-radius: 8px;
   border: 1px solid #2b5035;
   color: #5c5151;
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: default;

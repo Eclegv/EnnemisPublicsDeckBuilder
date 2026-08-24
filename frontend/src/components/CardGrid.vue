@@ -1,6 +1,6 @@
 <template>
   <div class="card-grid">
-    <CardItem v-for="card in cards" :key="card.id" :card="card" @add="addToDeck(card)" />
+    <CardItem v-for="card in cards" :key="card.id" :card="card" />
   </div>
 </template>
 

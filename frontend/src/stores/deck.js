@@ -30,6 +30,7 @@ export const searchQuery = computed(() => state.searchQuery)
 export const filteredCardTypes = computed(() => state.filteredCardTypes)
 export const loading = computed(() => state.loadingSets || state.loadingCards)
 export const error = computed(() => state.error)
+export const deck = computed(() => state.deck)
 
 export const allCards = computed(() => {
   const cards = []
@@ -91,58 +92,63 @@ export const deckCards = computed(() => {
   })
 })
 
+export function getDeckCardsByType(type)
+{
+  return deckCards.value.filter(item => type.includes(item.card.type))
+}
+
 export const errors = computed(() => {
   let errorsData = {
     count: 0,
-    text: ""
+    errorsByGroup: {}
   }
 
   if(deckCount.value != 33)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le total de carte est ${deckCount.value > 33 ? "superieur" : "inferieur"} a la taille attendu du deck : 33\n`
+    errorsData.errorsByGroup["Deck"] = `Le total de carte est ${deckCount.value > 33 ? "superieur" : "inferieur"} a la taille attendu du deck : 33\n`
   }
 
   if(bossCount.value != 1)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre de boss est ${bossCount.value > 1 ? "superieur" : "inferieur"} a la valeur attendue : 1\n`
+    errorsData.errorsByGroup["Boss"] = `- Le nombre de boss est ${bossCount.value > 1 ? "superieur" : "inferieur"} a la valeur attendue : 1\n`
   }
 
   if(valiseCount.value != 3)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre de valise est ${valiseCount.value > 3 ? "superieur" : "inferieur"} a la valeur attendue : 3\n`
+    errorsData.errorsByGroup["Valise"] = `- Le nombre de valise est ${valiseCount.value > 3 ? "superieur" : "inferieur"} a la valeur attendue : 3\n`
   }
 
   if(actionCount.value < 6)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre d'action est inferieur a la valeur attendue : 6\n`
+    errorsData.errorsByGroup["Action"] = `- Le nombre d'action est inferieur a la valeur attendue : 6\n`
   }
 
   if(sbireCount.value < 8)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre de sbire est inferieur a la valeur attendue : 8\n`
+    errorsData.errorsByGroup["Sbire"] = `- Le nombre de sbire est inferieur a la valeur attendue : 8\n`
   }
 
   if(allieCount.value < 4)
   {
     errorsData.count++
-    errorsData.text = `${errorsData.text}- Le nombre d'alliés est inferieur a la valeur attendue : 4\n`
+    errorsData.errorsByGroup["Allie"] = `- Le nombre d'alliés est inferieur a la valeur attendue : 4\n`
   }
 
   deckCards.value.forEach(element => {
     if((element.card.type == "Allie" || element.card.type == "Eclipse") && element.count > 1)
     {
       errorsData.count++
-      errorsData.text = `${errorsData.text}- La carte ${element.card.type} ${element.card.name} est presente en plus d'un exemplaire\n`
+      errorsData.errorsByGroup["Allie"] = `${errorsData.errorsByGroup["Allie"] || ""}- La carte ${element.card.type} ${element.card.name} est presente en plus d'un exemplaire\n`
     }
     if((element.card.type == "SbireUnique") && element.count > 1)
     {
       errorsData.count++
-      errorsData.text = `${errorsData.text}- La carte ${element.card.type} ${element.card.name} est presente en plus d'un exemplaire\n`
+      errorsData.errorsByGroup["Sbire"] = `${errorsData.errorsByGroup["Sbire"] || ""}- La carte ${element.card.type} ${element.card.name} est presente en plus d'un exemplaire\n`
     }
     if(element.card.type == "Eclipse")
     {
@@ -150,7 +156,7 @@ export const errors = computed(() => {
         if (element.card.eclipseEffect == card.card.name)
         {
           errorsData.count++
-          errorsData.text = `${errorsData.text}- La carte ${element.card.type} ${element.card.name} a son Eclipse ${card.card.name} presente dans le deck\n`
+          errorsData.errorsByGroup["Allie"] = `${errorsData.errorsByGroup["Allie"] || ""}- La carte ${element.card.type} ${element.card.name} a son Eclipse ${card.card.name} presente dans le deck\n`
         }
       });
     }
@@ -191,6 +197,11 @@ function countType(cardTOKENS)
     else
       return sum
   }, 0)
+}
+
+export function countCard(cardId)
+{
+  return state.deck[cardId]?.count || 0
 }
 
 export const deckByCost = computed(() => {
@@ -330,4 +341,9 @@ function removeCard(cards, id)
   {
     cards.splice(index, 1);
   }
+}
+
+export function isMobile() {
+  const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  return regex.test(navigator.userAgent);
 }

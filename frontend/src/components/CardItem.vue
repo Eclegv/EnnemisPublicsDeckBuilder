@@ -1,6 +1,6 @@
 <template>
   <div class="card-wrapper">
-    <div class="card-outer" :class="cardBorderClass">
+    <div class="card-outer border-regular">
       <div class="card-inner">
         <!-- Portrait image -->
         <div class="card-portrait">
@@ -25,24 +25,22 @@
         <!-- Text box -->
         <div class="card-textbox">
           <div v-if="card.type" class="card-type">{{ card.type }}</div>
-          <div v-if="card.description" class="card-description">
-            {{ card.description }}
+          <div v-if="card.lore" class="card-flavor">
+            <div class="deck-card-qty">
+              <button class="qty-btn" @click="removeFromDeck(card)">−</button>
+              <span class="qty-value">{{ countCard(card.id) }}</span>
+              <button class="qty-btn" @click="addToDeck(card)">+</button>
+            </div>
           </div>
-          <div v-if="card.flavor" class="card-flavor">"{{ card.flavor }}"</div>
         </div>
       </div>
-    </div>
-
-    <!-- Hover overlay -->
-    <div class="card-overlay">
-      <button class="add-btn" @click.stop="$emit('add')">+ Ajouter au Deck</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
-import { COLORS } from "../stores/deck.js";
+import { addToDeck, removeFromDeck, COLORS, countCard } from "../stores/deck.js";
 
 const props = defineProps({
   card: {
@@ -50,36 +48,11 @@ const props = defineProps({
     required: true,
   },
 });
-
-defineEmits(["add"]);
-
-const isLeader = computed(() => {
-  const t = (props.card.type || "").toLowerCase();
-  return t.includes("leader") || t.includes("commander") || props.card.isLeader;
-});
-
-const cardBorderClass = computed(() => {
-  return isLeader.value ? "border-leader" : "border-regular";
-});
-
-function costColor(cost) {
-  return COLORS[cost] || "#666";
-}
 </script>
 
 <style scoped>
 .card-wrapper {
   position: relative;
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
-
-.card-wrapper:hover {
-  transform: translateY(-6px) scale(1.02);
-}
-
-.card-wrapper:hover .card-overlay {
-  opacity: 1;
 }
 
 .card-outer {
@@ -260,5 +233,43 @@ function costColor(cost) {
 .add-btn:hover {
   background: #f0d878;
   transform: scale(1.05);
+}
+
+.deck-card-qty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.qty-btn {
+  width: 1.4rem;
+  height: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d1f12;
+  border: 1px solid #2b5035;
+  color: #7aaa6a;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.qty-btn:hover {
+  background: #1a2e1a;
+  border-color: #d4af37;
+  color: #f0d878;
+}
+
+.qty-value {
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f0d878;
+  min-width: 1.2rem;
+  text-align: center;
 }
 </style>
