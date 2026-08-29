@@ -24,16 +24,16 @@ services:
       retries: 3
       start_period: 0s
 
-  lab:
-    container_name: memgraph-lab
-    image: memgraph/lab:3.12.0
-    depends_on:
-      - neo4j
-    ports:
-      - "3002:3000"
-    environment:
-      - QUICK_CONNECT_MG_HOST=memgraph
-      - QUICK_CONNECT_MG_PORT=7687
+  # lab:
+  #   container_name: memgraph-lab
+  #   image: memgraph/lab:3.12.0
+  #   depends_on:
+  #     - neo4j
+  #   ports:
+  #     - "3002:3000"
+  #   environment:
+  #     - QUICK_CONNECT_MG_HOST=memgraph
+  #     - QUICK_CONNECT_MG_PORT=7687
 
   webapi:
     build: ./backend
