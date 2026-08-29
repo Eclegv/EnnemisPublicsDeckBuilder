@@ -25,12 +25,10 @@
         <!-- Text box -->
         <div class="card-textbox">
           <div v-if="card.type" class="card-type">{{ card.type }}</div>
-          <div v-if="card.lore" class="card-flavor">
-            <div class="deck-card-qty">
-              <button class="qty-btn" @click="removeFromDeck(card)">−</button>
-              <span class="qty-value">{{ countCard(card.id) }}</span>
-              <button class="qty-btn" @click="addToDeck(card)">+</button>
-            </div>
+          <div class="deck-card-qty">
+            <button class="qty-btn" @click="removeFromDeck(card)">−</button>
+            <span class="qty-value">{{ countCard(card.id) }}</span>
+            <button class="qty-btn" @click="addToDeck(card)">+</button>
           </div>
         </div>
       </div>
