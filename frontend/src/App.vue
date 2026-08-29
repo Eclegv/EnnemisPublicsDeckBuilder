@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import BuilderView from './views/BuilderView.vue'
+import BuilderView from "./views/BuilderView.vue";
 </script>
 
 <style>
@@ -16,7 +16,7 @@ import BuilderView from './views/BuilderView.vue'
 }
 
 body {
-  font-family: 'Crimson Text', 'Georgia', serif;
+  font-family: "Crimson Text", "Georgia", serif;
   background: #09170d;
   color: #e8dcc8;
   min-height: 100vh;

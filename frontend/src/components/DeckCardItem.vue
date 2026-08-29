@@ -11,19 +11,18 @@
 </template>
 
 <script setup>
-import { addToDeck, removeFromDeck, COLORS } from '../stores/deck.js'
+import { addToDeck, removeFromDeck, COLORS } from "../stores/deck.js";
 
 defineProps({
   item: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 function costColor(cost) {
-  return COLORS[cost] || '#666'
+  return COLORS[cost] || "#666";
 }
-
 </script>
 
 <style scoped>
@@ -32,7 +31,7 @@ function costColor(cost) {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.9rem;
-  margin: 0.2rem 0.75rem;
+  margin: 0.2rem 0.75rem 0.2rem 1.25rem;
   border: 1px solid #2b5035;
   border-radius: 8px;
   background: #1a2e1a;
@@ -58,8 +57,8 @@ function costColor(cost) {
   font-size: 0.6rem;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-  border: 1px solid rgba(255,255,255,0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .deck-card-cost.empty {
@@ -68,7 +67,7 @@ function costColor(cost) {
 
 .deck-card-name {
   flex: 1;
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.8rem;
   color: #e8dcc8;
   white-space: nowrap;
@@ -107,7 +106,7 @@ function costColor(cost) {
 }
 
 .qty-value {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.85rem;
   font-weight: 600;
   color: #f0d878;

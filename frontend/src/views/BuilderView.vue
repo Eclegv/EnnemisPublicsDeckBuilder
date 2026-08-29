@@ -1,19 +1,19 @@
 <template>
   <div class="builder">
-    <SetFilterBar/>
+    <SetFilterBar />
 
     <div class="builder-body">
       <div class="card-area">
-          <div class="search-bar">
-            <input
-              type="text"
-              placeholder="Recherchez une carte..."
-              :value="searchQuery"
-              @input="e => setSearchQuery(e.target.value)"
-            />
-            <span class="result-count">{{ filteredCardsByType.length }} cartes</span>
-            <TypeFilter :modelValue="filteredCardTypes"></TypeFilter>
-          </div>
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Recherchez une carte..."
+            :value="searchQuery"
+            @input="(e) => setSearchQuery(e.target.value)"
+          />
+          <span class="result-count">{{ filteredCardsByType.length }} cartes</span>
+          <TypeFilter :modelValue="filteredCardTypes"></TypeFilter>
+        </div>
 
         <div v-if="loading && filteredCards.length === 0" class="status">
           Loading cards...
@@ -32,14 +32,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { loadSets, searchQuery, filteredCardsByType, filteredCardTypes, filteredCards, loading, error, setSearchQuery } from '../stores/deck.js'
-import SetFilterBar from '../components/SetFilterBar.vue'
-import CardGrid from '../components/CardGrid.vue'
-import DeckSidebar from '../components/DeckSidebar.vue'
-import TypeFilter from '../components/TypeFilter.vue'
+import { onMounted, ref } from "vue";
+import {
+  loadSets,
+  searchQuery,
+  filteredCardsByType,
+  filteredCardTypes,
+  filteredCards,
+  loading,
+  error,
+  setSearchQuery,
+} from "../stores/deck.js";
+import SetFilterBar from "../components/SetFilterBar.vue";
+import CardGrid from "../components/CardGrid.vue";
+import DeckSidebar from "../components/DeckSidebar.vue";
+import TypeFilter from "../components/TypeFilter.vue";
 
-onMounted(loadSets)
+onMounted(loadSets);
 </script>
 
 <style scoped>
@@ -98,7 +107,7 @@ onMounted(loadSets)
   border-radius: 8px;
   padding: 0.5rem 1rem;
   color: #e8dcc8;
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.2s;
