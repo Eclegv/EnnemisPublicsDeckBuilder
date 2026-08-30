@@ -1,21 +1,26 @@
 <template>
-  <div ref="container" class="button-wrapper">
-    <button class="main-button" @click.stop="toggleTooltip">
+  <div class="button-wrapper">
+    <button ref="container" class="main-button" @click.stop="toggleTooltip">
       <span v-if="errors" class="material-symbols-outlined"> warning </span>
       <span v-else class="checked material-symbols-outlined"> check </span>
     </button>
 
-    <div
-      v-if="open && errors !== '' && errors !== null && errors !== undefined"
-      class="tooltip"
-    >
-      {{ errors }}
-    </div>
+    <Teleport to="body">
+      <div
+        ref="floating"
+        :style="floatingStyles"
+        v-if="open && errors !== '' && errors !== null && errors !== undefined"
+        class="tooltip"
+      >
+        {{ errors }}
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useFloating, autoPlacement, autoUpdate, arrow } from "@floating-ui/vue";
 
 defineProps({
   errors: {
@@ -27,6 +32,11 @@ defineProps({
 
 const open = ref(false);
 const container = ref(null);
+const floating = ref(null);
+
+const { floatingStyles, middlewareData } = useFloating(container, floating, {
+  placement: "bottom-end",
+});
 
 function toggleTooltip() {
   open.value = !open.value;
@@ -96,10 +106,6 @@ onBeforeUnmount(() => {
 }
 
 .tooltip {
-  position: fixed;
-
-  transform: translateX(-100%);
-
   font-family: "Cinzel", serif;
   font-size: 0.95rem;
 

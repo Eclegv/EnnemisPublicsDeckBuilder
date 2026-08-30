@@ -2,7 +2,7 @@
   <div class="sidebar-wrapper">
     <button class="burger-btn" @click="isCollapsed = !isCollapsed" title="Open deck">
       <span class="burger-icon">☰</span>
-      <span class="burger-count">{{ deckCount }}</span>
+      <span :data-warning="deckCount != 33" class="burger-count">{{ deckCount }}</span>
     </button>
 
     <aside class="deck-sidebar" :class="{ collapsed: isCollapsed }">
@@ -98,6 +98,15 @@ const isCollapsed = ref(false || isMobile());
   transition: width 0.25s ease;
 }
 
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
 .sidebar-wrapper:has(.deck-sidebar.collapsed) {
   width: 0;
 }
@@ -154,6 +163,10 @@ const isCollapsed = ref(false || isMobile());
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
   border: 1px solid #2b5035;
+
+  &[data-warning="true"] {
+    color: #cc4545;
+  }
 }
 
 .deck-sidebar.collapsed {
