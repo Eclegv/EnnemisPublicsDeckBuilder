@@ -16,10 +16,6 @@ RUN pnpm install
 
 RUN pnpm build
 
-RUN ls -lah
-RUN ls -lah ./dist
-RUN ls -lah ./dist/assets
-
 FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
