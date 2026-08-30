@@ -95,7 +95,7 @@ const isCollapsed = ref(false || isMobile());
   display: flex;
   flex-shrink: 0;
   width: 340px;
-  transition: width 0.25s ease;
+  transition: width 0.3s ease-out;
 }
 
 @media (max-width: 768px) {
@@ -108,7 +108,7 @@ const isCollapsed = ref(false || isMobile());
 }
 
 .sidebar-wrapper:has(.deck-sidebar.collapsed) {
-  width: 0;
+  width: 0px;
 }
 
 .sidebar-wrapper:has(.deck-sidebar.collapsed) .burger-btn {
@@ -140,7 +140,7 @@ const isCollapsed = ref(false || isMobile());
   border-radius: 8px 0 0 8px;
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  transition: all 0.25s ease-out;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
 }
 
@@ -170,8 +170,6 @@ const isCollapsed = ref(false || isMobile());
 }
 
 .deck-sidebar.collapsed {
-  transform: translateX(100%);
-  opacity: 0;
   pointer-events: none;
 }
 
