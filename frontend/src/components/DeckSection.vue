@@ -100,9 +100,11 @@ let isCollapsed = ref(false);
   transition: all 0.2s ease;
 }
 
-.collapse-section-btn:hover {
-  background: #1a2e1a;
-  border-color: #d4af37;
+@media (hover: hover) {
+  .collapse-section-btn:hover {
+    background: #1a2e1a;
+    border-color: #d4af37;
+  }
 }
 
 .collapse-section-icon {

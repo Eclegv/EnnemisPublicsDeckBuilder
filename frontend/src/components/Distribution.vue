@@ -149,9 +149,11 @@ const isCollapsed = ref(false);
   transition: all 0.2s ease;
 }
 
-.collapse-btn:hover {
-  background: #1a2e1a;
-  border-color: #d4af37;
+@media (hover: hover) {
+  .collapse-btn:hover {
+    background: #1a2e1a;
+    border-color: #d4af37;
+  }
 }
 
 .collapse-icon {

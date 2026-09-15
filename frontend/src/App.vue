@@ -43,7 +43,9 @@ body {
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #3a6b45;
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3a6b45;
+  }
 }
 </style>

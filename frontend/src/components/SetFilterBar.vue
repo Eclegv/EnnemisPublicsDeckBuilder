@@ -1,6 +1,6 @@
 <template>
   <div class="set-filter-bar">
-    <div class="set-filter-label">Sets de cartes: </div>
+    <div class="set-filter-label">Sets de cartes:</div>
     <div class="set-filter-scroll">
       <button
         v-for="set in sets"
@@ -10,14 +10,14 @@
         @click="toggleSet(set.id || set.guid)"
       >
         <span class="set-name">{{ set.name }}</span>
-        <span class="set-count">{{ set.cardCount ?? '?' }}</span>
+        <span class="set-count">{{ set.cardCount ?? "?" }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { sets, isSetSelected, toggleSet } from '../stores/deck.js'
+import { sets, isSetSelected, toggleSet } from "../stores/deck.js";
 </script>
 
 <style scoped>
@@ -32,7 +32,7 @@ import { sets, isSetSelected, toggleSet } from '../stores/deck.js'
 }
 
 .set-filter-label {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.8rem;
   font-weight: 600;
   color: #7aaa6a;
@@ -65,11 +65,12 @@ import { sets, isSetSelected, toggleSet } from '../stores/deck.js'
   font: inherit;
 }
 
-.set-pill:hover {
-  border-color: #d4af37;
-  background: #558963 !important;
+@media (hover: hover) {
+  .set-pill:hover {
+    border-color: #d4af37;
+    background: #558963 !important;
+  }
 }
-
 .set-pill.active {
   background: #1f3a1f;
   border-color: #d4af37;

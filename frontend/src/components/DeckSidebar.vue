@@ -144,9 +144,11 @@ const isCollapsed = ref(false || isMobile());
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
 }
 
-.burger-btn:hover {
-  background: #1a2e1a;
-  border-color: #d4af37;
+@media (hover: hover) {
+  .burger-btn:hover {
+    background: #1a2e1a;
+    border-color: #d4af37;
+  }
 }
 
 .burger-icon {
