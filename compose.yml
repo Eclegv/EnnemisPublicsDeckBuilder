@@ -44,9 +44,9 @@ services:
       - 5000:5000
     environment:
       Database__Url: bolt://neo4j:7687
-      Database__Auth: neo4j
-      Database__Password: password_1234
-      Database__Name: neo4j
+      Database__Auth: ${Database__Auth}
+      Database__Password: ${Database__Password}
+      Database__Name: ${Database__Name}
 
   frontend:
     build: ./frontend

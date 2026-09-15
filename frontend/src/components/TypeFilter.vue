@@ -20,23 +20,23 @@
 </template>
 
 <script setup>
-import { TYPES, COLORS } from '../stores/deck.js'
+import { TYPES, COLORS } from "../stores/deck.js";
 
 const props = defineProps({
   modelValue: {
     type: Array,
-    default: () => []
-  }
-})
+    default: () => [],
+  },
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"]);
 
 function toggle(type) {
-  const idx = props.modelValue.indexOf(type)
+  const idx = props.modelValue.indexOf(type);
   if (idx >= 0) {
-    props.modelValue.splice(idx, 1)
+    props.modelValue.splice(idx, 1);
   } else {
-    props.modelValue.push(type)
+    props.modelValue.push(type);
   }
 }
 </script>
@@ -63,7 +63,7 @@ function toggle(type) {
 }
 
 .type-filter-label {
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: 0.7rem;
   font-weight: 600;
   color: #7aaa6a;
@@ -105,9 +105,11 @@ function toggle(type) {
   user-select: none;
 }
 
-.type-checkbox:hover {
-  border-color: #d4af37;
-  background: #558963;
+@media (hover: hover) {
+  .type-checkbox:hover {
+    border-color: #d4af37;
+    background: #558963;
+  }
 }
 
 .type-checkbox.checked {
@@ -136,7 +138,7 @@ function toggle(type) {
 }
 
 .type-name {
-  font-family: 'Crimson Text', serif;
+  font-family: "Crimson Text", serif;
   font-size: 0.8rem;
   color: #c8d8a8;
 }

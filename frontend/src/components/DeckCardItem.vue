@@ -38,9 +38,11 @@ function costColor(cost) {
   transition: all 0.15s;
 }
 
-.deck-card-item:hover {
-  background: #1f3a1f;
-  border-color: #d4af37;
+@media (hover: hover) {
+  .deck-card-item:hover {
+    background: #1f3a1f;
+    border-color: #d4af37;
+  }
 }
 
 .deck-card-cost {
@@ -99,10 +101,12 @@ function costColor(cost) {
   transition: all 0.1s;
 }
 
-.qty-btn:hover {
-  background: #1a2e1a;
-  border-color: #d4af37;
-  color: #f0d878;
+@media (hover: hover) {
+  .qty-btn:hover {
+    background: #1a2e1a;
+    border-color: #d4af37;
+    color: #f0d878;
+  }
 }
 
 .qty-value {

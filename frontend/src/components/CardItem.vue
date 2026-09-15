@@ -228,9 +228,11 @@ const props = defineProps({
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
-.add-btn:hover {
-  background: #f0d878;
-  transform: scale(1.05);
+@media (hover: hover) {
+  .add-btn:hover {
+    background: #f0d878;
+    transform: scale(1.05);
+  }
 }
 
 .deck-card-qty {
@@ -256,10 +258,12 @@ const props = defineProps({
   transition: all 0.1s;
 }
 
-.qty-btn:hover {
-  background: #1a2e1a;
-  border-color: #d4af37;
-  color: #f0d878;
+@media (hover: hover) {
+  .qty-btn:hover {
+    background: #1a2e1a;
+    border-color: #d4af37;
+    color: #f0d878;
+  }
 }
 
 .qty-value {
