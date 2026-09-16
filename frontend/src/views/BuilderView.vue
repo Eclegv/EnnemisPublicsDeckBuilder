@@ -71,7 +71,6 @@ onMounted(loadSets);
   flex-direction: column;
   overflow: hidden;
   min-width: 0;
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
 }
 
 @media (max-width: 768px) {
@@ -90,6 +89,10 @@ onMounted(loadSets);
 
   .search-bar :deep(.type-filter) {
     flex-basis: 100%;
+  }
+
+  .card-area {
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
   }
 }
 
